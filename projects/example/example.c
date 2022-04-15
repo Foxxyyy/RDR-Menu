@@ -16,7 +16,7 @@
 void main()
 {
 	int welcomeMessageDisplayed = 0;
-	Script fuiEventId = LaunchNewScript("$/content/scripting/DesignerDefined/ui/fuieventmonitor_o", false);
+	Script fuiEventId = LaunchNewScript("$/content/scripting/DesignerDefined/ui/fuieventmonitor_o");
 	ADD_PERSISTENT_SCRIPT(GET_THIS_SCRIPT_ID());
 	InitMenuDraw();
 
