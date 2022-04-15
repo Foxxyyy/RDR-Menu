@@ -1,0 +1,3296 @@
+//> Default Static Information
+SetStaticsCount 262
+SetStaticName 0 selectedPlayerId
+SetStaticName 1 selectedPlayerId
+SetStaticName 2 Container
+SetStaticName 3 AddItemCounter
+SetStaticName 4 Container
+SetDefaultStatic 16 10
+SetDefaultStatic 17 4
+SetStaticName 250 selectedPlayerId
+SetStaticName 251 boolTest
+SetStaticName 252 LastMenuLevelOption
+//<
+
+:__builtin__entryPoint//>
+Function 0 2
+PushString "<blue>"
+SetStatic1 15
+Push GetFuncLoc("ExecutionEntry")
+SetStatic1 22
+Call @main
+Return 0 0
+//<
+
+:IntToHex//>
+Function 2 8
+GetFrame1 1
+JumpFalse @__if_else_0
+
+:__if_then_0
+PushString "0123456789ABCDEF"
+SetFrame1 4
+Jump @__if_end_0
+
+:__if_else_0
+PushString "0123456789abcdef"
+SetFrame1 4
+
+:__if_end_0
+GetFrameP1 0
+SetFrame1 5
+PushString "         "
+SetFrame1 6
+Push_0
+SetFrame1 7
+GetFrame1 7
+Push_4
+CmpLt
+JumpFalse @__for_end_0
+
+:__for_body_0
+GetFrame1 4
+GetFrame1 5
+GetFrame1 7
+Add
+pGet
+PushB 24
+CallNative shift_right 2 1
+Push_4
+CallNative shift_right 2 1
+PushB 15
+And
+Add
+pGet
+PushB 24
+CallNative shift_right 2 1
+Dup
+PushB 127
+JumpLE @__ExtSignWord--noSign--0
+Push -16777216
+Or
+
+:__ExtSignWord--noSign--0
+PushB 24
+CallNative shift_left 2 1
+GetFrame1 6
+GetFrame1 7
+Push_2
+Mult
+Add
+pGet
+PushI24 16777215
+And
+Or
+GetFrame1 6
+GetFrame1 7
+Push_2
+Mult
+Add
+pSet
+GetFrame1 4
+GetFrame1 5
+GetFrame1 7
+Add
+pGet
+PushB 24
+CallNative shift_right 2 1
+PushB 15
+And
+Add
+pGet
+PushB 24
+CallNative shift_right 2 1
+Dup
+PushB 127
+JumpLE @__ExtSignWord--noSign--1
+Push -16777216
+Or
+
+:__ExtSignWord--noSign--1
+PushB 24
+CallNative shift_left 2 1
+GetFrame1 6
+GetFrame1 7
+Push_2
+Mult
+Push_1
+Add
+Add
+pGet
+PushI24 16777215
+And
+Or
+GetFrame1 6
+GetFrame1 7
+Push_2
+Mult
+Push_1
+Add
+Add
+pSet
+
+:__for_continue_0
+GetFrame1 7
+Add1 1
+SetFrame1 7
+GetFrame1 7
+Push_4
+CmpLt
+Not
+JumpFalse @__for_body_0
+
+:__for_end_0
+PushB2 0 24
+CallNative shift_left 2 1
+GetFrame1 6
+Add1 8
+pGet
+PushI24 16777215
+And
+Or
+GetFrame1 6
+Add1 8
+pSet
+GetFrame1 6
+Return 2 1
+//<
+
+:IntToBase//>
+Function 2 6
+Push_0
+SetFrame1 4
+Push_1
+SetFrame1 5
+GetFrame1 0
+JumpFalse @__while_end_2
+
+:__while_body_2
+GetFrame1 4
+GetFrame1 0
+GetFrame1 1
+Mod
+GetFrame1 5
+Mult
+Add
+SetFrame1 4
+GetFrame1 0
+GetFrame1 1
+Div
+SetFrame1 0
+GetFrame1 5
+PushB 10
+Mult
+SetFrame1 5
+
+:__while_cond_2
+GetFrame1 0
+Not
+JumpFalse @__while_body_2
+
+:__while_end_2
+GetFrame1 4
+Return 2 1
+//<
+
+:InitMenuDraw//>
+Function 0 2
+Call @InitMenuExecution
+Push_0
+Call @ExecutionEntry
+Return 0 0
+//<
+
+:GetMenuContainer//>
+Function 0 2
+GetStaticP1 4
+Return 0 1
+//<
+
+:SetCursorIndex//>
+Function 1 4
+CallNative IS_PS3 0 1 //0xA369B36F
+JumpFalse @__if_end_30
+
+:__if_then_30
+Return 1 0
+
+:__if_end_30
+CallNative GET_GAME_EDITION 0 1 //0xB5401D4A
+PushB 9
+CmpEq
+JumpFalse @__cond_false_5
+
+:__cond_true_5
+Push -2096528908
+Jump @__cond_end_5
+
+:__cond_false_5
+Push -2096528812
+
+:__cond_end_5
+SetFrame1 3
+GetFrame1 0
+GetFrame1 3
+pGet
+PushB 48
+Add
+pSet
+Return 1 0
+//<
+
+:HasPlayerOpenedMenu//>
+Function 0 2
+Call @GetPlayerController
+PushB3 10 1 0
+CallNative IS_BUTTON_PRESSED 4 1 //0x7BCB3F15
+JumpFalse @__if_end_31
+
+:__if_then_31
+Call @GetPlayerController
+PushB3 2 1 0
+CallNative IS_BUTTON_DOWN 4 1 //0xC3297B50
+Return 0 1
+
+:__if_end_31
+Push_0
+Return 0 1
+//<
+
+:ShutDownMenu//>
+Function 0 2
+GetStaticP1 4
+GetImmP1 14
+Dup
+pGet
+PushS -2
+And
+pPeekSet
+Drop
+GetStaticP1 4
+GetImmP1 14
+Dup
+pGet
+PushS -3
+And
+pPeekSet
+Drop
+CallNative NET_PLAYER_LIST_RESET 0 0 //0x67031EDA
+Push_0
+CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
+Push_1
+CallNative _ACTOR_ALLOW_BUMP_REACTIONS 2 0 //0xC52B5F18
+GetStaticP1 4
+GetImmP1 17
+pGet
+CallNative IS_SCRIPT_USE_CONTEXT_VALID 1 1 //0x115CD0CC
+JumpFalse @__if_end_32
+
+:__if_then_32
+GetStaticP1 4
+GetImmP1 17
+pGet
+CallNative RELEASE_SCRIPT_USE_CONTEXT 1 0 //0x4F52CB58
+
+:__if_end_32
+Return 0 0
+//<
+
+:OpenMenuControls//>
+Function 0 2
+Call @HasPlayerOpenedMenu
+JumpFalse @__if_else_33
+
+:__if_then_33
+GetStaticP1 4
+GetImmP1 14
+Dup
+pGet
+Push_2
+Or
+pPeekSet
+Drop
+GetStaticP1 4
+GetImmP1 14
+pGet
+Push_1
+And
+Push_0
+CmpNe
+JumpFalse @__if_else_34
+
+:__if_then_34
+Call @ShutDownMenu
+Jump @__if_end_34
+
+:__if_else_34
+GetStaticP1 4
+GetImmP1 14
+Dup
+pGet
+Push_1
+Or
+pPeekSet
+Drop
+PushString "HudGamerList"
+CallNative UI_PUSH 1 0 //0x97C5EFC8
+PushString "HudGamerList"
+CallNative UI_INCLUDE 1 0 //0x209255AD
+PushString "HudGamerList"
+CallNative UI_ENABLE 1 0 //0xE576DCAD
+PushString "HudGamerList"
+CallNative UI_ACTIVATE 1 0 //0xD11BD55A
+PushString "HudGamerList"
+CallNative UI_ENTER 1 0 //0x594F2657
+PushString "HudGamerList"
+CallNative UI_FOCUS 1 0 //0x699CC85E
+PushString "HudGamerList"
+CallNative UI_REFRESH 1 0 //0xFAC3DF71
+PushString "HUD_MP_UNLOCK_MASTER"
+CallNative PLAY_SOUND_FRONTEND 1 0 //0x2E458F74
+PushString "Generic_Dbuffer128_1"
+PushB3 0 11 0
+PushB3 0 0 0
+Push_-1
+Push_0
+CallNative ADD_SCRIPT_USE_CONTEXT 9 1 //0xD7591B0E
+GetStaticP1 4
+GetImmP1 17
+pSet
+
+:__if_end_34
+Jump @__if_end_33
+
+:__if_else_33
+GetStaticP1 4
+GetImmP1 14
+pGet
+Push_2
+And
+Push_0
+CmpNe
+JumpFalse @__if_end_35
+
+:__if_then_35
+GetStaticP1 4
+GetImmP1 14
+Dup
+pGet
+PushS -3
+And
+pPeekSet
+Drop
+
+:__if_end_35
+
+:__if_end_33
+Push_0
+CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
+PushString "DISABLE_HORSE_WHISTLE"
+CallNative DECOR_CHECK_EXIST 2 1 //0xA0773F5C
+JumpFalse @__if_end_36
+
+:__if_then_36
+Push_0
+CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
+PushString "DISABLE_HORSE_WHISTLE"
+CallNative DECOR_REMOVE 2 1 //0xE0E2640B
+Drop
+
+:__if_end_36
+Return 0 0
+//<
+
+:UpdateMenuLevel//>
+Function 3 5
+GetFrame1 0
+Push_0
+CmpGt
+JumpFalse @__if_else_37
+
+:__pcf_64
+GetFrame1 0
+PushB 10
+CmpLe
+JumpFalse @__if_else_37
+
+:__if_then_37
+GetStaticP1 4
+GetImmP1 14
+Dup
+pGet
+Push_4
+Or
+pPeekSet
+Drop
+GetStaticP1 4
+GetImmP1 16
+pGet
+Add1 1
+GetStaticP1 4
+GetImmP1 16
+pSet
+GetFrame1 1
+GetStaticP1 4
+GetImmP1 18
+GetStaticP1 4
+GetImmP1 16
+pGet
+Mult1 2
+GetImmP
+GetImmP1 1
+pSet
+Push_0
+Call @SetCursorIndex
+GetStaticP1 4
+GetImmP1 16
+pGet
+PushB 10
+CmpLt
+JumpFalse @__if_end_38
+
+:__if_then_38
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 2
+Mult1 13
+GetImmP
+GetImmP1 1
+pGet
+GetStaticP1 4
+GetImmP1 18
+GetStaticP1 4
+GetImmP1 16
+pGet
+Mult1 2
+GetImmP
+GetImmP1 0
+pSet
+GetFrame1 1
+GetStaticP1 4
+GetImmP1 18
+GetStaticP1 4
+GetImmP1 16
+pGet
+Mult1 2
+GetImmP
+GetImmP1 0
+pGet
+PCall
+
+:__if_end_38
+Jump @__if_end_37
+
+:__if_else_37
+GetFrame1 0
+Push_0
+CmpLt
+JumpFalse @__if_end_39
+
+:__pcf_68
+GetFrame1 0
+PushS -10
+CmpGe
+JumpFalse @__if_end_39
+
+:__if_then_39
+GetStaticP1 4
+GetImmP1 14
+Dup
+pGet
+PushS -5
+And
+pPeekSet
+Drop
+GetStaticP1 4
+GetImmP1 16
+pGet
+Push_0
+CmpEq
+JumpFalse @__if_else_40
+
+:__if_then_40
+Call @ShutDownMenu
+Return 3 0
+
+:__if_else_40
+GetStaticP1 4
+GetImmP1 16
+pGet
+Add2 -1
+GetStaticP1 4
+GetImmP1 16
+pSet
+GetStaticP1 252
+GetStaticP1 4
+GetImmP1 16
+pGet
+Mult1 1
+GetImmP
+pGet
+Call @SetCursorIndex
+GetStaticP1 4
+GetImmP1 18
+GetStaticP1 4
+GetImmP1 16
+pGet
+Mult1 2
+GetImmP
+GetImmP1 0
+pGet
+Push_0
+CmpNe
+JumpFalse @__if_end_41
+
+:__if_then_41
+Push_0
+PushB2 0 2
+GetStaticP1 4
+GetImmP1 18
+GetStaticP1 4
+GetImmP1 16
+pGet
+Push_1
+Add
+Mult1 2
+GetImmP
+FromStack
+GetFrame1 1
+GetStaticP1 4
+GetImmP1 18
+GetStaticP1 4
+GetImmP1 16
+pGet
+Mult1 2
+GetImmP
+GetImmP1 0
+pGet
+PCall
+
+:__if_end_41
+
+:__if_end_39
+
+:__if_end_37
+Return 3 0
+//<
+
+:ParseMenuControls//>
+Function 0 6
+PushString "HudGamerList"
+Push_0
+CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
+SetFrame1 2
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 2
+Mult1 13
+GetImmP
+SetFrame1 3
+GetFrame1 3
+GetImmP1 0
+pGet
+Push_2
+And
+Push_0
+CmpNe
+Not
+JumpFalse @__if_end_42
+
+:__if_then_42
+GetFrame1 3
+GetImmP1 4
+GetImmP1 0
+pGet
+SetFrame1 4
+GetFrame1 4
+Switch [2 @__sw_0_0]:[8 @__sw_0_0]:[3 @__sw_0_1]
+Jump @__sw_0_def
+
+:__sw_0_0
+Call @GetPlayerController
+PushB3 15 1 0
+CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
+JumpFalse @__if_else_43
+
+:__if_then_43
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 7
+GetImmP1 0
+pGet
+CmpLe
+JumpFalse @__if_else_44
+
+:__if_then_44
+GetFrame1 3
+GetImmP1 4
+GetImmP1 8
+GetImmP1 0
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pSet
+Jump @__if_end_44
+
+:__if_else_44
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+Dup
+pGet
+GetFrame1 4
+PushB 8
+CmpEq
+JumpFalse @__cond_false_6
+
+:__cond_true_6
+Push_1
+Jump @__cond_end_6
+
+:__cond_false_6
+GetFrame1 3
+GetImmP1 4
+GetImmP1 4
+GetImmP1 0
+pGet
+
+:__cond_end_6
+Sub
+pPeekSet
+Drop
+
+:__if_end_44
+GetFrame1 3
+GetImmP1 0
+pGet
+Push_1
+And
+Push_0
+CmpNe
+JumpFalse @__if_end_45
+
+:__if_then_45
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+GetFrame1 3
+GetImmP1 1
+pGet
+PCall
+
+:__if_end_45
+Jump @__if_end_43
+
+:__if_else_43
+Call @GetPlayerController
+PushB3 13 1 0
+CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
+JumpFalse @__if_end_46
+
+:__if_then_46
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 8
+GetImmP1 0
+pGet
+CmpGe
+JumpFalse @__if_else_47
+
+:__if_then_47
+GetFrame1 3
+GetImmP1 4
+GetImmP1 7
+GetImmP1 0
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pSet
+Jump @__if_end_47
+
+:__if_else_47
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+Dup
+pGet
+GetFrame1 4
+PushB 8
+CmpEq
+JumpFalse @__cond_false_7
+
+:__cond_true_7
+Push_1
+Jump @__cond_end_7
+
+:__cond_false_7
+GetFrame1 3
+GetImmP1 4
+GetImmP1 4
+GetImmP1 0
+pGet
+
+:__cond_end_7
+Add
+pPeekSet
+Drop
+
+:__if_end_47
+GetFrame1 3
+GetImmP1 0
+pGet
+Push_1
+And
+Push_0
+CmpNe
+JumpFalse @__if_end_48
+
+:__if_then_48
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+GetFrame1 3
+GetImmP1 1
+pGet
+PCall
+
+:__if_end_48
+
+:__if_end_46
+
+:__if_end_43
+Jump @__sw_0_end
+
+:__sw_0_1
+Call @GetPlayerController
+PushB3 15 1 0
+CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
+JumpFalse @__if_else_49
+
+:__if_then_49
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 7
+GetImmP1 0
+pGet
+PushF 0.000015
+FAdd
+FCmpLe
+JumpFalse @__if_else_50
+
+:__if_then_50
+GetFrame1 3
+GetImmP1 4
+GetImmP1 8
+GetImmP1 0
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pSet
+Jump @__if_end_50
+
+:__if_else_50
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+Dup
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 4
+GetImmP1 0
+pGet
+FSub
+pPeekSet
+Drop
+
+:__if_end_50
+GetFrame1 3
+GetImmP1 0
+pGet
+Push_1
+And
+Push_0
+CmpNe
+JumpFalse @__if_end_51
+
+:__if_then_51
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+GetFrame1 3
+GetImmP1 1
+pGet
+PCall
+
+:__if_end_51
+Jump @__if_end_49
+
+:__if_else_49
+Call @GetPlayerController
+PushB3 13 1 0
+CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
+JumpFalse @__if_end_52
+
+:__if_then_52
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 8
+GetImmP1 0
+pGet
+FCmpGe
+JumpFalse @__if_else_53
+
+:__if_then_53
+GetFrame1 3
+GetImmP1 4
+GetImmP1 7
+GetImmP1 0
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pSet
+Jump @__if_end_53
+
+:__if_else_53
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+Dup
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 4
+GetImmP1 0
+pGet
+FAdd
+pPeekSet
+Drop
+
+:__if_end_53
+GetFrame1 3
+GetImmP1 0
+pGet
+Push_1
+And
+Push_0
+CmpNe
+JumpFalse @__if_end_54
+
+:__if_then_54
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+GetFrame1 3
+GetImmP1 1
+pGet
+PCall
+
+:__if_end_54
+
+:__if_end_52
+
+:__if_end_49
+Jump @__sw_0_end
+
+:__sw_0_def
+Jump @__sw_0_end
+
+:__sw_0_end
+Call @GetPlayerController
+PushB3 14 1 0
+CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
+JumpFalse @__if_end_55
+
+:__if_then_55
+PushString "HudGamerList"
+Push_0
+CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
+GetStaticP1 4
+GetImmP1 15
+pGet
+Push_2
+Sub
+CmpGt
+JumpFalse @__if_else_56
+
+:__if_then_56
+Push_0
+Call @SetCursorIndex
+Jump @__if_end_56
+
+:__if_else_56
+PushString "HudGamerList"
+Push_0
+CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
+Push_1
+Add
+Call @SetCursorIndex
+
+:__if_end_56
+PushString "HUD_MENU_NAV_DOWN_MASTER"
+CallNative PLAY_SOUND_FRONTEND 1 0 //0x2E458F74
+
+:__if_end_55
+Call @GetPlayerController
+PushB3 12 1 0
+CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
+JumpFalse @__if_end_57
+
+:__if_then_57
+PushString "HudGamerList"
+Push_0
+CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
+Push_1
+CmpLt
+JumpFalse @__if_else_58
+
+:__if_then_58
+GetStaticP1 4
+GetImmP1 15
+pGet
+Push_1
+Sub
+Call @SetCursorIndex
+Jump @__if_end_58
+
+:__if_else_58
+PushString "HudGamerList"
+Push_0
+CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
+Push_1
+Sub
+Call @SetCursorIndex
+
+:__if_end_58
+PushString "HUD_MENU_NAV_UP_MASTER"
+CallNative PLAY_SOUND_FRONTEND 1 0 //0x2E458F74
+
+:__if_end_57
+Call @GetPlayerController
+PushB3 6 1 0
+CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
+JumpFalse @__if_end_59
+
+:__if_then_59
+PushString "HUD_MENU_SELECT_MASTER"
+CallNative PLAY_SOUND_FRONTEND 1 0 //0x2E458F74
+GetFrame1 4
+Switch [4 @__sw_1_0]:[5 @__sw_1_1]:[6 @__sw_1_1]:[7 @__sw_1_2]
+Jump @__sw_1_end
+
+:__sw_1_0
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 5
+pGet
+Call @IS_BIT_SET
+SetFrame1 5
+GetFrame1 5
+Not
+JumpFalse @__if_else_60
+
+:__if_then_60
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 5
+pGet
+Call @SET_BIT
+Jump @__if_end_60
+
+:__if_else_60
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 5
+pGet
+Call @CLEAR_BIT
+
+:__if_end_60
+GetFrame1 3
+GetImmP1 1
+pGet
+Push_0
+CmpNe
+JumpFalse @__if_end_61
+
+:__if_then_61
+GetFrame1 5
+Not
+GetFrame1 3
+GetImmP1 1
+pGet
+PCall
+
+:__if_end_61
+Return 0 0
+Jump @__sw_1_end
+
+:__sw_1_1
+GetFrame1 2
+GetStaticP1 252
+GetStaticP1 4
+GetImmP1 16
+pGet
+Mult1 1
+GetImmP
+pSet
+Push_1
+GetFrame1 4
+Push_6
+CmpEq
+JumpFalse @__cond_false_8
+
+:__cond_true_8
+GetFrame1 3
+GetImmP1 4
+GetImmP1 2
+GetImmP1 0
+pGet
+Jump @__cond_end_8
+
+:__cond_false_8
+Push_0
+
+:__cond_end_8
+GetFrame1 2
+Call @UpdateMenuLevel
+Return 0 0
+
+:__sw_1_2
+GetFrame1 2
+GetStaticP1 252
+GetStaticP1 4
+GetImmP1 16
+pGet
+Mult1 1
+GetImmP
+pSet
+Push_1
+GetFrame1 3
+GetImmP1 4
+GetImmP1 1
+pGet
+GetFrame1 2
+Call @UpdateMenuLevel
+Return 0 0
+
+:__sw_1_end
+GetFrame1 3
+GetImmP1 1
+pGet
+Push_0
+CmpNe
+JumpFalse @__if_end_62
+
+:__if_then_62
+GetFrame1 4
+Push_6
+CmpEq
+Not
+JumpFalse @__cond_true_9
+
+:__pcf_97
+GetFrame1 4
+Push_1
+CmpEq
+JumpFalse @__cond_false_9
+
+:__cond_true_9
+GetFrame1 3
+GetImmP1 4
+GetImmP1 2
+GetImmP1 0
+pGet
+Jump @__cond_end_9
+
+:__cond_false_9
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+
+:__cond_end_9
+GetFrame1 3
+GetImmP1 1
+pGet
+PCall
+
+:__if_end_62
+
+:__if_end_59
+GetFrame1 3
+GetImmP1 2
+GetImmP1 0
+pGet
+JumpFalse @__if_end_63
+
+:__pcf_99
+Call @GetPlayerController
+PushB3 7 1 0
+CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
+JumpFalse @__if_end_63
+
+:__if_then_63
+GetFrame1 3
+GetImmP1 2
+GetImmP1 0
+pGet
+Push_0
+CmpNe
+JumpFalse @__if_end_64
+
+:__if_then_64
+Push_0
+GetFrame1 3
+GetImmP1 2
+GetImmP1 0
+pGet
+PCall
+
+:__if_end_64
+
+:__if_end_63
+
+:__if_end_42
+Call @GetPlayerController
+PushB3 5 1 0
+CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
+JumpFalse @__if_end_65
+
+:__if_then_65
+Push_-1
+Push_0
+GetFrame1 2
+Call @UpdateMenuLevel
+PushString "HUD_MENU_BACK_MASTER"
+CallNative PLAY_SOUND_FRONTEND 1 0 //0x2E458F74
+
+:__if_end_65
+Return 0 0
+//<
+
+:DoNeededStuff//>
+Function 0 2
+CallNative HUD_CLEAR_HELP_QUEUE 0 0 //0x495164AD
+Push_0
+CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
+PushString "DISABLE_HORSE_WHISTLE"
+Push_1
+CallNative DECOR_SET_BOOL 3 1 //0x8E101F5C
+Drop
+Push_0
+CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
+CallNative CANCEL_CURRENTLY_PLAYING_AMBIENT_SPEECH 1 0 //0x4DBD473B
+Push_0
+CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
+Push_0
+CallNative _ACTOR_ALLOW_BUMP_REACTIONS 2 0 //0xC52B5F18
+Call @GetPlayerController
+PushB2 0 0
+CallNative GET_STICK_X 3 1 //0x9AAF7E28
+PushF 0.200000
+FCmpGt
+Not
+JumpFalse @__if_then_66
+
+:__pct_12
+Call @GetPlayerController
+PushB2 0 0
+CallNative GET_STICK_X 3 1 //0x9AAF7E28
+PushF -0.200000
+FCmpLt
+Not
+JumpFalse @__if_then_66
+
+:__pct_11
+Call @GetPlayerController
+PushB2 0 0
+CallNative GET_STICK_Y 3 1 //0x7C6D41A4
+PushF 0.200000
+FCmpGt
+Not
+JumpFalse @__if_then_66
+
+:__pcf_104
+Call @GetPlayerController
+PushB2 0 0
+CallNative GET_STICK_Y 3 1 //0x7C6D41A4
+PushF -0.200000
+FCmpLt
+JumpFalse @__if_else_66
+
+:__if_then_66
+PushB3 0 1 0
+Push_0
+CallNative SET_PLAYER_CONTROL 4 0 //0xD17AFCD8
+Jump @__if_end_66
+
+:__if_else_66
+PushB3 0 0 1
+Push_1
+CallNative SET_PLAYER_CONTROL 4 0 //0xD17AFCD8
+
+:__if_end_66
+Return 0 0
+//<
+
+:SetSubtitle//>
+Function 1 4
+GetGlobalP3 76905
+SetFrame1 3
+GetFrame1 0
+GetFrame1 3
+StrCopy 64
+GetFrame1 3
+CallNative NET_PLAYER_LIST_SET_DESCRIPTION 1 0 //0xCF065186
+Return 1 0
+//<
+
+:CheckPlayerEvent//>
+Function 2 4
+GetFrame1 0
+GetGlobalP3 76943
+GetArrayP1 96
+GetImm1 31
+GetFrame1 1
+And
+SetFrame1 21
+GetFrame1 21
+GetFrame1 1
+CmpEq
+Push_0
+CmpNe
+Return 2 1
+//<
+
+:GetVolumeValue//>
+Function 1 3
+GetFrame1 0
+GetGlobalP3 76943
+GetArray1 96
+Return 1 1
+//<
+
+:DrawMenu//>
+Function 0 87
+PushF_1
+CallNative GET_LAST_FRAME_TIME 0 1 //0x59466B4D
+FDiv
+FtoI
+SetFrame1 2
+PushString "HudGamerList"
+Push_0
+CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
+Push_1
+Add
+GetStaticP1 4
+GetImmP1 15
+pGet
+CmpGt
+JumpFalse @__if_end_67
+
+:__if_then_67
+Push_0
+Call @SetCursorIndex
+
+:__if_end_67
+CallNative NET_PLAYER_LIST_RESET 0 0 //0x67031EDA
+PushString "Generic_Dbuffer128_1"
+PushString "<red>Host:</red> %s   <blue>Players:</blue> %i   <green>FPS:</green> %i"
+CallNative GET_SLOT_FOR_HOST 0 1 //0x860FCDBD
+Call @GetSlotColor
+CallNative GET_NUM_PLAYERS 0 1 //0xF99A8BC
+GetFrame1 2
+CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
+PushString "Generic_Dbuffer64_0"
+PushString "%s"
+GetStaticP1 4
+GetImmP1 0
+GetStaticP1 4
+GetImmP1 16
+pGet
+Mult1 1
+GetImmP
+pGet
+Push_0
+Push_0
+CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
+PushString "Generic_Dbuffer64_0"
+CallNative NET_PLAYER_LIST_SET_TITLE 1 0 //0x547A660
+GetStaticP1 4
+GetImmP1 13
+pGet
+Push_7
+CmpNe
+JumpFalse @__if_else_68
+
+:__if_then_68
+PushString "Generic_Dbuffer128_0"
+PushString "Welcome %s <green>(%i/%i)</green>"
+Push_0
+CallNative GET_LOCAL_PLAYER_NAME 1 1 //0xA183D927
+PushString "HudGamerList"
+Push_0
+CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
+Push_1
+Add
+GetStaticP1 4
+GetImmP1 15
+pGet
+CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
+Jump @__if_end_68
+
+:__if_else_68
+PushString "Generic_Dbuffer128_0"
+PushString "<green>(%i/%i)</green>"
+PushString "HudGamerList"
+Push_0
+CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
+Push_1
+Add
+GetStaticP1 4
+GetImmP1 15
+pGet
+Push_0
+CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
+
+:__if_end_68
+PushString "Generic_Dbuffer128_0"
+Call @SetSubtitle
+GetStaticP1 4
+GetImmP1 15
+pGet
+Push_1
+Sub
+SetFrame1 83
+Push_0
+SetFrame1 84
+GetFrame1 83
+Push_0
+CmpGe
+JumpFalse @__for_end_3
+
+:__for_body_3
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 0
+pGet
+Switch [5 @__sw_2_0]:[6 @__sw_2_0]
+Jump @__sw_2_def
+
+:__sw_2_0
+GetFrameP1 3
+PushString "%s%s<space>>>"
+GetStaticP1 4
+GetImmP1 11
+pGet
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 3
+pGet
+Push_2
+GetFrameP1 85
+FromStack
+GetFrameP1 85
+PushB2 2 2
+Call @sprintf
+Jump @__sw_2_end
+
+:__sw_2_def
+GetFrameP1 3
+PushString "%s%s"
+GetStaticP1 4
+GetImmP1 11
+pGet
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 3
+pGet
+Push_2
+GetFrameP1 85
+FromStack
+GetFrameP1 85
+PushB2 2 2
+Call @sprintf
+Jump @__sw_2_end
+
+:__sw_2_end
+GetFrameP1 3
+GetFrame1 83
+CallNative NET_PLAYER_LIST_ADD_ITEM 2 1 //0xFD355ED1
+Drop
+GetStaticP1 4
+GetImmP1 12
+pGet
+CallNative _UI_SET_ITEM_COLOR 1 1 //0x794F5C21
+Drop
+GetStaticP1 4
+GetImmP1 13
+pGet
+CallNative NET_PLAYER_LIST_SET_TEMPLATE 1 0 //0xD6111569
+Push_1
+PushString ""
+CallNative NET_PLAYER_LIST_SET_HEADER 2 0 //0xFA382FCB
+Push_2
+PushString ""
+CallNative NET_PLAYER_LIST_SET_HEADER 2 0 //0xFA382FCB
+Push_3
+PushString ""
+CallNative NET_PLAYER_LIST_SET_HEADER 2 0 //0xFA382FCB
+Push_4
+PushString ""
+CallNative NET_PLAYER_LIST_SET_HEADER 2 0 //0xFA382FCB
+PushString "HudGamerList"
+CallNative UI_DISABLE_INPUT 1 0 //0x9E2C2701
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 0
+pGet
+Switch [2 @__sw_3_0]:[3 @__sw_3_1]:[8 @__sw_3_2]:[7 @__sw_3_3]:[4 @__sw_3_4]
+Jump @__sw_3_end
+
+:__sw_3_0
+GetFrameP1 67
+PushString "[%i]"
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pGet
+SetFrame1 85
+GetFrameP1 85
+PushB2 1 1
+Call @sprintf
+Push_0
+GetFrameP1 67
+CallNative _UI_DRAW_RIGHT_TEXT 2 1 //0xC673362C
+Drop
+Jump @__sw_3_end
+
+:__sw_3_1
+GetFrameP1 67
+PushString "[%s]"
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pGet
+Push_1
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 6
+pGet
+CallNative _FLOAT_TO_STRING 3 1 //0x8ED1FF95
+SetFrame1 85
+GetFrameP1 85
+PushB2 1 1
+Call @sprintf
+Push_0
+GetFrameP1 67
+CallNative _UI_DRAW_RIGHT_TEXT 2 1 //0xC673362C
+Drop
+Jump @__sw_3_end
+
+:__sw_3_2
+GetFrameP1 67
+PushString "[%s]"
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 4
+GetImmP1 0
+pGet
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pGet
+Mult1 1
+GetImmP
+pGet
+SetFrame1 85
+GetFrameP1 85
+PushB2 1 1
+Call @sprintf
+Push_0
+GetFrameP1 67
+CallNative _UI_DRAW_RIGHT_TEXT 2 1 //0xC673362C
+Drop
+Jump @__sw_3_end
+
+:__sw_3_3
+GetFrameP1 67
+PushString "%s"
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 1
+pGet
+Call @GetVolumeValue
+Call @GetRegion
+SetFrame1 85
+GetFrameP1 85
+PushB2 1 1
+Call @sprintf
+Push_0
+GetFrameP1 67
+CallNative _UI_DRAW_RIGHT_TEXT 2 1 //0xC673362C
+Drop
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 1
+pGet
+PushI24 131072
+Call @CheckPlayerEvent
+JumpFalse @__if_else_69
+
+:__if_then_69
+Push_1
+PushString "<SKULL>"
+CallNative _UI_DRAW_RIGHT_TEXT 2 1 //0xC673362C
+Drop
+Jump @__if_end_69
+
+:__if_else_69
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 1
+pGet
+Push 134217728
+Call @CheckPlayerEvent
+JumpFalse @__if_end_70
+
+:__if_then_70
+Push_1
+PushString "<MP_DEFEND>"
+CallNative _UI_DRAW_RIGHT_TEXT 2 1 //0xC673362C
+Drop
+
+:__if_end_70
+
+:__if_end_69
+Jump @__sw_3_end
+
+:__sw_3_4
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pGet
+GetStaticP1 4
+GetImmP1 38
+GetFrame1 84
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 5
+pGet
+Call @IS_BIT_SET
+SetFrame1 85
+Push_0
+GetFrame1 85
+JumpFalse @__cond_false_10
+
+:__cond_true_10
+PushString "[<green>ON</green>]"
+Jump @__cond_end_10
+
+:__cond_false_10
+PushString "[<red>OFF</red>]"
+
+:__cond_end_10
+CallNative _UI_DRAW_RIGHT_TEXT 2 1 //0xC673362C
+Drop
+Jump @__sw_3_end
+
+:__sw_3_end
+PushString "HudGamerList"
+CallNative UI_FOCUS 1 0 //0x699CC85E
+PushString "HudGamerList"
+CallNative UI_REFRESH 1 0 //0xFAC3DF71
+
+:__for_continue_3
+GetFrame1 83
+Add2 -1
+SetFrame1 83
+GetFrame1 84
+Add1 1
+SetFrame1 84
+GetFrame1 83
+Push_0
+CmpGe
+Not
+JumpFalse @__for_body_3
+
+:__for_end_3
+Return 0 0
+//<
+
+:HandleMenuUi//>
+Function 0 2
+Call @OpenMenuControls
+GetStaticP1 4
+GetImmP1 14
+pGet
+Push_1
+And
+Push_0
+CmpNe
+JumpFalse @__if_else_71
+
+:__if_then_71
+Call @ParseMenuControls
+Call @DrawMenu
+Call @DoNeededStuff
+Jump @__if_end_71
+
+:__if_else_71
+PushB3 0 1 0
+Push_0
+CallNative SET_PLAYER_CONTROL 4 0 //0xD17AFCD8
+PushString "HudGamerList"
+CallNative UI_ISFOCUSED 1 1 //0x6F2509E8
+JumpFalse @__if_else_72
+
+:__if_then_72
+PushString "HudGamerList"
+CallNative UI_UNFOCUS 1 0 //0xACEA059
+Jump @__if_end_72
+
+:__if_else_72
+PushString "HudGamerList"
+CallNative UI_FOCUS 1 0 //0x699CC85E
+PushString "HudGamerList"
+CallNative UI_RESTORE 1 0 //0x7ADB2BE7
+PushString "HudGamerList"
+CallNative UI_REFRESH 1 0 //0xFAC3DF71
+
+:__if_end_72
+PushString "HudGamerList"
+CallNative UI_ISFOCUSED 1 1 //0x6F2509E8
+JumpFalse @__while_end_4
+
+:__while_body_4
+GetStaticP1 4
+GetImmP1 17
+pGet
+CallNative IS_SCRIPT_USE_CONTEXT_VALID 1 1 //0x115CD0CC
+JumpFalse @__if_end_73
+
+:__if_then_73
+GetStaticP1 4
+GetImmP1 17
+pGet
+CallNative RELEASE_SCRIPT_USE_CONTEXT 1 0 //0x4F52CB58
+
+:__if_end_73
+CallNative NET_PLAYER_LIST_RESET 0 0 //0x67031EDA
+CallNative NET_GET_FREE_ROAM_MODE 0 1 //0x81F24788
+Push_1
+CmpEq
+JumpFalse @__if_else_74
+
+:__if_then_74
+PushString "Generic_Dbuffer64_0"
+PushString "%s"
+PushString "Hardcore Free Roam"
+Push_0
+Push_0
+CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
+Jump @__if_end_74
+
+:__if_else_74
+CallNative NET_GET_FREE_ROAM_MODE 0 1 //0x81F24788
+Push_2
+CmpEq
+JumpFalse @__if_else_75
+
+:__if_then_75
+PushString "Generic_Dbuffer64_0"
+PushString "%s"
+PushString "Friendly Free Roam"
+Push_0
+Push_0
+CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
+Jump @__if_end_75
+
+:__if_else_75
+PushString "Generic_Dbuffer64_0"
+PushString "%s"
+PushString "Free Roam"
+Push_0
+Push_0
+CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
+
+:__if_end_75
+
+:__if_end_74
+PushString "Generic_Dbuffer64_0"
+CallNative NET_PLAYER_LIST_SET_TITLE 1 0 //0x547A660
+PushString "Generic_Dbuffer128_0"
+PushString ""
+CallNative UI_SET_STRING 2 0 //0xE457546C
+PushString "Generic_Dbuffer128_0"
+Call @SetSubtitle
+PushString "HudGamerList"
+CallNative UI_UNFOCUS 1 0 //0xACEA059
+Push_0
+CallNative WAIT 1 0 //0x7715C03B
+
+:__while_cond_4
+PushString "HudGamerList"
+CallNative UI_ISFOCUSED 1 1 //0x6F2509E8
+Not
+JumpFalse @__while_body_4
+
+:__while_end_4
+
+:__if_end_71
+Return 0 0
+//<
+
+:InitMenuExecution//>
+Function 0 2
+Call @GetMenuContainer
+SetStatic1 2
+Return 0 0
+//<
+
+:LoopedExecutionEntry//>
+Function 0 2
+Call @LoopedOptions
+Call @NetLoopedFunctions
+Return 0 0
+//<
+
+:ExecutionEntry//>
+Function 1 3
+Call @MainMenu
+Return 1 0
+//<
+
+:WasLastmenuDirectionForward//>
+Function 0 2
+GetStatic1 2
+GetImmP1 14
+pGet
+Push_4
+And
+Push_0
+CmpNe
+Return 0 1
+//<
+
+:GetMenuSlotId//>
+Function 0 2
+GetStatic1 2
+GetImmP1 18
+GetStatic1 2
+GetImmP1 16
+pGet
+Mult1 2
+GetImmP
+GetImmP1 1
+pGet
+Return 0 1
+//<
+
+:SetHeader//>
+Function 1 3
+Push_0
+SetStatic1 3
+Push_0
+GetStatic1 2
+GetImmP1 15
+pSet
+GetFrame1 0
+GetStatic1 2
+GetImmP1 0
+GetStatic1 2
+GetImmP1 16
+pGet
+Mult1 1
+GetImmP
+pSet
+Return 1 0
+//<
+
+:AddItem//>
+Function 3 5
+GetStatic1 3
+PushB 16
+CmpLt
+JumpFalse @__if_end_19
+
+:__if_then_19
+Call @ResetCurrentItem
+GetFrame1 0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 3
+pSet
+GetFrame1 1
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 1
+pSet
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 0
+pSet
+GetFrame1 2
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 2
+GetImmP1 0
+pSet
+GetStatic1 3
+Add1 1
+SetStatic1 3
+GetStatic1 2
+GetImmP1 15
+pGet
+Add1 1
+GetStatic1 2
+GetImmP1 15
+pSet
+
+:__if_end_19
+Return 3 0
+//<
+
+:AddItemBool//>
+Function 5 7
+GetStatic1 3
+PushB 16
+CmpLt
+JumpFalse @__if_end_26
+
+:__if_then_26
+Call @ResetCurrentItem
+GetFrame1 0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 3
+pSet
+GetFrame1 3
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 1
+pSet
+GetFrame1 1
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pSet
+Push_4
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 0
+pSet
+GetFrame1 2
+PushB 24
+CallNative shift_right 2 1
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 5
+pSet
+GetFrame1 4
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 2
+GetImmP1 0
+pSet
+GetStatic1 3
+Add1 1
+SetStatic1 3
+GetStatic1 2
+GetImmP1 15
+pGet
+Add1 1
+GetStatic1 2
+GetImmP1 15
+pSet
+
+:__if_end_26
+Return 5 0
+//<
+
+:AddItemMenu//>
+Function 3 5
+GetStatic1 3
+PushB 16
+CmpLt
+JumpFalse @__if_end_27
+
+:__if_then_27
+Call @ResetCurrentItem
+GetFrame1 0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 3
+pSet
+GetFrame1 1
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 1
+pSet
+Push_5
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 0
+pSet
+GetFrame1 2
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 2
+GetImmP1 0
+pSet
+GetStatic1 3
+Add1 1
+SetStatic1 3
+GetStatic1 2
+GetImmP1 15
+pGet
+Add1 1
+GetStatic1 2
+GetImmP1 15
+pSet
+
+:__if_end_27
+Return 3 0
+//<
+
+:AddItemPlayer//>
+Function 2 4
+GetStatic1 3
+PushB 16
+CmpLt
+JumpFalse @__if_end_29
+
+:__if_then_29
+Call @ResetCurrentItem
+GetFrame1 0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 1
+pSet
+GetFrame1 0
+Call @GetSlotColor
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 3
+pSet
+GetFrame1 1
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 1
+pSet
+Push_7
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 0
+pSet
+GetStatic1 3
+Add1 1
+SetStatic1 3
+GetStatic1 2
+GetImmP1 15
+pGet
+Add1 1
+GetStatic1 2
+GetImmP1 15
+pSet
+
+:__if_end_29
+Return 2 0
+//<
+
+:GetPlayerController//>
+Function 0 2
+Push_0
+CallNative IS_LOCAL_PLAYER_VALID 1 1 //0xADC17E9
+JumpFalse @__if_end_78
+
+:__if_then_78
+Push_0
+CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
+CallNative _GET_ACTOR_CONTROLLER 1 1 //0x524F6981
+Return 0 1
+
+:__if_end_78
+Push_0
+Return 0 1
+//<
+
+:IS_BIT_SET//>
+Function 2 4
+Push_1
+GetFrame1 1
+CallNative shift_left 2 1
+GetFrame1 0
+And
+Push_0
+CmpNe
+Push_0
+CmpNe
+Return 2 1
+//<
+
+:SET_BIT//>
+Function 2 4
+GetFrame1 0
+Dup
+pGet
+Push_1
+GetFrame1 1
+CallNative shift_left 2 1
+Or
+pPeekSet
+Drop
+Return 2 0
+//<
+
+:CLEAR_BIT//>
+Function 2 4
+GetFrame1 0
+Dup
+pGet
+Push_1
+GetFrame1 1
+CallNative shift_left 2 1
+Push_-1
+Xor
+And
+pPeekSet
+Drop
+Return 2 0
+//<
+
+:GetRegion//>
+Function 1 3
+GetFrame1 0
+Switch [5 @__sw_4_0]:[6 @__sw_4_1]:[7 @__sw_4_2]:[8 @__sw_4_3]:[9 @__sw_4_4]:[10 @__sw_4_5]:[11 @__sw_4_6]:[12 @__sw_4_7]:[13 @__sw_4_8]:[14 @__sw_4_9]:[15 @__sw_4_10]:[16 @__sw_4_11]:[17 @__sw_4_12]:[18 @__sw_4_13]:[19 @__sw_4_14]:[20 @__sw_4_15]:[21 @__sw_4_16]:[22 @__sw_4_17]:[23 @__sw_4_18]:[24 @__sw_4_19]:[25 @__sw_4_20]:[26 @__sw_4_21]:[27 @__sw_4_22]:[28 @__sw_4_23]:[29 @__sw_4_24]:[30 @__sw_4_25]:[31 @__sw_4_26]:[32 @__sw_4_27]:[33 @__sw_4_28]:[34 @__sw_4_29]:[35 @__sw_4_30]:[36 @__sw_4_31]:[37 @__sw_4_32]:[38 @__sw_4_33]:[39 @__sw_4_34]:[40 @__sw_4_35]:[41 @__sw_4_36]:[88 @__sw_4_37]:[89 @__sw_4_38]:[90 @__sw_4_39]:[91 @__sw_4_40]:[92 @__sw_4_41]:[93 @__sw_4_42]:[94 @__sw_4_43]:[95 @__sw_4_44]:[96 @__sw_4_45]:[97 @__sw_4_46]:[98 @__sw_4_47]
+Jump @__sw_4_def
+
+:__sw_4_0
+PushString "Cholla Springs"
+Return 1 1
+
+:__sw_4_1
+PushString "Diez Coronas"
+Return 1 1
+
+:__sw_4_2
+PushString "Gaptooth Bridge"
+Return 1 1
+
+:__sw_4_3
+PushString "Great Plains"
+Return 1 1
+
+:__sw_4_4
+PushString "Hennigan's Stead"
+Return 1 1
+
+:__sw_4_5
+PushString "Perdido"
+Return 1 1
+
+:__sw_4_6
+PushString "Punta Orgullo"
+Return 1 1
+
+:__sw_4_7
+PushString "Rio Bravo"
+Return 1 1
+
+:__sw_4_8
+PushString "Tall Trees"
+Return 1 1
+
+:__sw_4_9
+PushString "Agave Viejo"
+Return 1 1
+
+:__sw_4_10
+PushString "Armadillo"
+Return 1 1
+
+:__sw_4_11
+PushString "Beecher's Hope"
+Return 1 1
+
+:__sw_4_12
+PushString "Benedict Point"
+Return 1 1
+
+:__sw_4_13
+PushString "Blackwater"
+Return 1 1
+
+:__sw_4_14
+PushString "Casa Madrugada"
+Return 1 1
+
+:__sw_4_15
+PushString "Chuparosa"
+Return 1 1
+
+:__sw_4_16
+PushString "Cochinay"
+Return 1 1
+
+:__sw_4_17
+PushString "Coot's Chapel"
+Return 1 1
+
+:__sw_4_18
+PushString "El Matadero"
+Return 1 1
+
+:__sw_4_19
+PushString "El Presidio"
+Return 1 1
+
+:__sw_4_20
+PushString "Escalera"
+Return 1 1
+
+:__sw_4_21
+PushString "Las Hermanas"
+Return 1 1
+
+:__sw_4_22
+PushString "MacFarlane's Ranch"
+Return 1 1
+
+:__sw_4_23
+PushString "Manzanita Post"
+Return 1 1
+
+:__sw_4_24
+PushString "Pacific Union RR Camp"
+Return 1 1
+
+:__sw_4_25
+PushString "Plainview"
+Return 1 1
+
+:__sw_4_26
+PushString "Ridgewood Farm"
+Return 1 1
+
+:__sw_4_27
+PushString "Rathskeller Fork"
+Return 1 1
+
+:__sw_4_28
+PushString "Thieve's Landing"
+Return 1 1
+
+:__sw_4_29
+PushString "Torquemada"
+Return 1 1
+
+:__sw_4_30
+PushString "Fort Mercer"
+Return 1 1
+
+:__sw_4_31
+PushString "Gaptooth Breach"
+Return 1 1
+
+:__sw_4_32
+PushString "Nosalida"
+Return 1 1
+
+:__sw_4_33
+PushString "Pike's Basin"
+Return 1 1
+
+:__sw_4_34
+PushString "Tesoro Azul"
+Return 1 1
+
+:__sw_4_35
+PushString "Tumbleweed"
+Return 1 1
+
+:__sw_4_36
+PushString "Twin Rocks"
+Return 1 1
+
+:__sw_4_37
+PushString "Broken Tree"
+Return 1 1
+
+:__sw_4_38
+PushString "Critchley's Ranch"
+Return 1 1
+
+:__sw_4_39
+PushString "Crooked Toes"
+Return 1 1
+
+:__sw_4_40
+PushString "Cueva Seca"
+Return 1 1
+
+:__sw_4_41
+PushString "Rio del Lobo"
+Return 1 1
+
+:__sw_4_42
+PushString "Roca de Madera"
+Return 1 1
+
+:__sw_4_43
+PushString "The Scratching Post"
+Return 1 1
+
+:__sw_4_44
+PushString "Silent Stead"
+Return 1 1
+
+:__sw_4_45
+PushString "Venter's Place"
+Return 1 1
+
+:__sw_4_46
+PushString "Rancho Polvo"
+Return 1 1
+
+:__sw_4_47
+PushString "Warthington Ranch"
+Return 1 1
+
+:__sw_4_def
+PushString "Unknown"
+Return 1 1
+
+:__sw_4_end
+//<
+
+:GetSlotColor//>
+Function 1 9
+CallNative NET_IS_IN_SESSION 0 1 //0x8CA54980
+Not
+JumpFalse @__if_end_79
+
+:__if_then_79
+PushString "Unknown"
+Return 1 1
+
+:__if_end_79
+Push_6
+PushString "MPPlayerNameColored_"
+ToStack
+Push_6
+GetFrameP1 3
+FromStack
+GetFrame1 0
+GetFrameP1 3
+StrAddI 23
+GetFrameP1 3
+CallNative UI_GET_STRING 1 1 //0xCCCFF80B
+Return 1 1
+//<
+
+:TeleportActor//>
+Function 4 7
+GetFrame1 0
+CallNative GET_HEADING 1 1 //0x42DE39F0
+SetFrame1 6
+GetFrame1 0
+CallNative IS_ACTOR_RIDING 1 1 //0xA6BBE769
+JumpFalse @__if_else_80
+
+:__if_then_80
+GetFrame1 0
+CallNative GET_MOUNT 1 1 //0xDD31EC4E
+GetFrameP1 1
+PushB3 1 1 1
+CallNative TELEPORT_ACTOR 5 0 //0x2D54B916
+Jump @__if_end_80
+
+:__if_else_80
+GetFrame1 0
+CallNative IS_ACTOR_DRIVING_VEHICLE 1 1 //0xDC99C124
+JumpFalse @__if_else_81
+
+:__if_then_81
+GetFrame1 0
+CallNative GET_VEHICLE 1 1 //0xA0936EB6
+GetFrameP1 1
+PushB3 1 1 1
+CallNative TELEPORT_ACTOR 5 0 //0x2D54B916
+Jump @__if_end_81
+
+:__if_else_81
+GetFrame1 0
+Push_3
+GetFrameP1 1
+ToStack
+GetFrame1 6
+PushB3 1 1 1
+CallNative TELEPORT_ACTOR_WITH_HEADING 8 0 //0xE4DE507C
+
+:__if_end_81
+
+:__if_end_80
+Return 4 0
+//<
+
+:sprintf//>
+Function 5 8
+GetFrameP1 1
+Push_4
+Add
+pGet
+SetFrame1 7
+GetFrame1 0
+GetFrame1 1
+GetFrame1 7
+Call @vsprintf
+Return 5 0
+//<
+
+:printf//>
+Function 4 135
+GetFrameP1 0
+Push_4
+Add
+pGet
+SetFrame1 134
+GetFrameP1 6
+GetFrame1 0
+GetFrame1 134
+Call @vsprintf
+PushString "<0xFFA500><ROCKSTAR></0x> "
+GetFrameP1 70
+StrCopy 255
+GetFrameP1 6
+GetFrameP1 70
+StrAdd 255
+CallNative HUD_CLEAR_OBJECTIVE_QUEUE 0 0 //0xE4DACF40
+GetFrameP1 70
+PushF_5
+PushB3 1 2 1
+PushB3 0 0 0
+CallNative MESSAGE_VARIABLE_ANALOG_QUEUE 8 0 //0x32394BB6
+Return 4 0
+//<
+
+:NetworkOptions//>
+Function 1 4
+PushString "Network Options"
+Call @SetHeader
+CallNative NET_IS_IN_SESSION 0 1 //0x8CA54980
+JumpFalse @__if_else_14
+
+:__if_then_14
+Push_0
+SetFrame1 3
+GetFrame1 3
+PushB 16
+CmpLt
+JumpFalse @__for_end_1
+
+:__for_body_1
+GetFrame1 3
+CallNative IS_SLOT_VALID 1 1 //0xD04480FE
+Not
+JumpFalse @__if_end_15
+
+:__if_then_15
+Jump @__for_continue_1
+
+:__if_end_15
+GetFrame1 3
+Push GetFuncLoc("OnlinePlayerSubMenu")
+Call @AddItemPlayer
+
+:__for_continue_1
+GetFrame1 3
+Add1 1
+SetFrame1 3
+GetFrame1 3
+PushB 16
+CmpLt
+Not
+JumpFalse @__for_body_1
+
+:__for_end_1
+Jump @__if_end_14
+
+:__if_else_14
+PushString "Not in multiplayer session"
+Push_0
+Push_0
+Call @AddItem
+
+:__if_end_14
+Return 1 0
+//<
+
+:MainMenu//>
+Function 0 2
+PushString "RDR Menu"
+Call @SetHeader
+PushString "Submenu 1"
+Push GetFuncLoc("SubMenu1")
+Push_0
+Call @AddItemMenu
+PushString "Network Options"
+Push GetFuncLoc("NetworkOptions")
+Push_0
+Call @AddItemMenu
+Return 0 0
+//<
+
+:LoopedOptions//>
+Function 0 3
+PushString "Generic_Dbuffer64_0"
+CallNative UI_GET_STRING 1 1 //0xCCCFF80B
+PushString "Network Options"
+CallNative _STRING_COMPARE 2 1 //0x8218D693
+JumpFalse @__if_end_16
+
+:__if_then_16
+Push_0
+SetFrame1 2
+GetFrame1 2
+PushB 16
+CmpLt
+JumpFalse @__for_end_2
+
+:__for_body_2
+GetFrame1 2
+PushS 2048
+Call @CheckPlayerEvent
+JumpFalse @__if_end_17
+
+:__if_then_17
+Push_0
+Call @NetworkOptions
+
+:__if_end_17
+
+:__for_continue_2
+GetFrame1 2
+Add1 1
+SetFrame1 2
+GetFrame1 2
+PushB 16
+CmpLt
+Not
+JumpFalse @__for_body_2
+
+:__for_end_2
+
+:__if_end_16
+Return 0 0
+//<
+
+:main//>
+Function 0 2
+CallNative GET_THIS_SCRIPT_ID 0 1 //0x9C424E0D
+CallNative ADD_PERSISTENT_SCRIPT 1 0 //0x2F109475
+Call @InitMenuDraw
+Push_1
+JumpFalse @__while_end_0
+
+:__while_body_0
+Call @HandleMenuUi
+Call @LoopedExecutionEntry
+Push_0
+CallNative WAIT 1 0 //0x7715C03B
+
+:__while_cond_0
+Push_1
+Not
+JumpFalse @__while_body_0
+
+:__while_end_0
+Return 0 0
+//<
+
+:OnlinePlayerSubMenu//>
+Function 1 3
+Call @WasLastmenuDirectionForward
+JumpFalse @__if_end_76
+
+:__if_then_76
+Call @GetMenuSlotId
+SetStatic1 250
+
+:__if_end_76
+GetStatic1 250
+Call @GetSlotColor
+Call @SetHeader
+PushString "Teleport to Player"
+Push GetFuncLoc("TeleportToPlayer")
+Push_0
+Call @AddItem
+Return 1 0
+//<
+
+:TeleportToPlayer//>
+Function 1 8
+GetFrame1 0
+pGet
+SetFrame1 3
+GetStatic1 250
+CallNative IS_SLOT_VALID 1 1 //0xD04480FE
+Not
+JumpFalse @__if_end_77
+
+:__if_then_77
+PushString "Failed !
+<red>Invalid player</red>"
+Push_0
+SetFrame1 7
+GetFrameP1 7
+PushB2 0 0
+Call @printf
+Return 1 0
+
+:__if_end_77
+GetStatic1 250
+GetFrameP1 4
+CallNative GET_SLOT_POSITION 2 1 //0x3241158C
+Drop
+Push_0
+CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
+Push_3
+GetFrameP1 4
+ToStack
+Call @TeleportActor
+PushString "Teleported to %s"
+GetStatic1 250
+Call @GetSlotColor
+SetFrame1 7
+GetFrameP1 7
+PushB2 1 1
+Call @printf
+Return 1 0
+//<
+
+:NetLoopedFunctions//>
+Function 0 2
+Return 0 0
+//<
+
+:SetCreditsFunction//>
+Function 1 4
+PushString "Credits to Im Foxxyyy & Sockstress"
+Push_0
+SetFrame1 3
+GetFrameP1 3
+PushB2 0 0
+Call @printf
+Return 1 0
+//<
+
+:SubMenu1//>
+Function 1 3
+PushString "SubMenu 1"
+Call @SetHeader
+PushString "Bool Test"
+GetStaticP1 251
+PushB2 0 24
+CallNative shift_left 2 1
+Push_0
+Push_0
+Call @AddItemBool
+PushString "> Credits"
+Push GetFuncLoc("SetCreditsFunction")
+Push_0
+Call @AddItem
+Return 1 0
+//<
+
+:ResetCurrentItem//>
+Function 0 2
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 0
+pSet
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 1
+pSet
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 2
+GetImmP1 0
+pSet
+PushString ""
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 3
+pSet
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 0
+pSet
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 1
+pSet
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 2
+GetImmP1 0
+pSet
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pSet
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 4
+GetImmP1 0
+pSet
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 5
+pSet
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 6
+pSet
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 7
+GetImmP1 0
+pSet
+Push_0
+GetStatic1 2
+GetImmP1 38
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 8
+GetImmP1 0
+pSet
+Return 0 0
+//<
+
+:vsprintf//>
+Function 3 10
+GetFrame1 1
+CallNative STRING_LENGTH 1 1 //0x6CE4B233
+SetFrame1 5
+Push_0
+SetFrame1 6
+PushString ""
+GetFrame1 0
+StrCopy 255
+Push_0
+SetFrame1 7
+Push_0
+SetFrame1 8
+GetFrame1 8
+GetFrame1 5
+CmpLt
+JumpFalse @__for_end_6
+
+:__for_body_6
+GetFrame1 1
+GetFrame1 8
+Add
+pGet
+PushB 24
+CallNative shift_right 2 1
+Dup
+PushB 127
+JumpLE @__ExtSignWord--noSign--22
+Push -16777216
+Or
+
+:__ExtSignWord--noSign--22
+PushB 37
+CmpEq
+JumpFalse @__if_else_89
+
+:__if_then_89
+GetFrame1 8
+Add1 1
+Dup
+SetFrame1 8
+GetFrame1 5
+CmpGe
+JumpFalse @__if_end_90
+
+:__if_then_90
+Jump @end_sprintf
+
+:__if_end_90
+
+:PF_Parse_Flags
+GetFrame1 1
+GetFrame1 8
+Add
+pGet
+PushB 24
+CallNative shift_right 2 1
+Dup
+PushB 127
+JumpLE @__ExtSignWord--noSign--23
+Push -16777216
+Or
+
+:__ExtSignWord--noSign--23
+Switch [43 @__sw_5_0]:[35 @__sw_5_1]
+Jump @__sw_5_end
+
+:__sw_5_0
+GetFrame1 7
+Push_1
+Or
+SetFrame1 7
+GetFrame1 8
+Add1 1
+Dup
+SetFrame1 8
+GetFrame1 5
+CmpGe
+JumpFalse @__if_end_91
+
+:__if_then_91
+Jump @end_sprintf
+
+:__if_end_91
+Jump @PF_Parse_Flags
+
+:__sw_5_1
+GetFrame1 7
+Push_2
+Or
+SetFrame1 7
+GetFrame1 8
+Add1 1
+Dup
+SetFrame1 8
+GetFrame1 5
+CmpGe
+JumpFalse @__if_end_92
+
+:__if_then_92
+Jump @end_sprintf
+
+:__if_end_92
+Jump @PF_Parse_Flags
+
+:__sw_5_end
+GetFrame1 1
+GetFrame1 8
+Add
+pGet
+PushB 24
+CallNative shift_right 2 1
+Dup
+PushB 127
+JumpLE @__ExtSignWord--noSign--24
+Push -16777216
+Or
+
+:__ExtSignWord--noSign--24
+Switch [100 @__sw_6_0]:[105 @__sw_6_0]:[111 @__sw_6_1]:[112 @__sw_6_2]:[120 @__sw_6_2]:[88 @__sw_6_3]:[99 @__sw_6_4]:[115 @__sw_6_5]:[110 @__sw_6_6]:[37 @__sw_6_7]
+Jump @__sw_6_end
+
+:__sw_6_0
+GetFrame1 2
+Push_4
+Add
+SetFrame1 2
+GetFrame1 2
+Push_4
+Sub
+pGet
+SetFrame1 9
+GetFrame1 7
+Push_1
+And
+Push_0
+CmpNe
+JumpFalse @__if_end_93
+
+:__pcf_144
+GetFrame1 9
+Push_0
+CmpGe
+JumpFalse @__if_end_93
+
+:__if_then_93
+PushString "+"
+GetFrame1 0
+StrAdd 255
+
+:__if_end_93
+GetFrame1 9
+GetFrame1 0
+StrAddI 255
+Jump @__sw_6_end
+
+:__sw_6_1
+GetFrame1 7
+Push_2
+And
+Push_0
+CmpNe
+JumpFalse @__if_end_94
+
+:__if_then_94
+PushString "0"
+GetFrame1 0
+StrAdd 255
+
+:__if_end_94
+GetFrame1 2
+Push_4
+Add
+SetFrame1 2
+GetFrame1 2
+Push_4
+Sub
+pGet
+PushB 8
+Call @IntToBase
+GetFrame1 0
+StrAddI 255
+Jump @__sw_6_end
+
+:__sw_6_2
+GetFrame1 7
+Push_2
+And
+Push_0
+CmpNe
+JumpFalse @__if_end_95
+
+:__if_then_95
+PushString "0x"
+GetFrame1 0
+StrAdd 255
+
+:__if_end_95
+GetFrame1 2
+Push_4
+Add
+SetFrame1 2
+GetFrame1 2
+Push_4
+Sub
+pGet
+Push_1
+Call @IntToHex
+GetFrame1 0
+StrAdd 255
+Jump @__sw_6_end
+
+:__sw_6_3
+GetFrame1 7
+Push_2
+And
+Push_0
+CmpNe
+JumpFalse @__if_end_96
+
+:__if_then_96
+PushString "0X"
+GetFrame1 0
+StrAdd 255
+
+:__if_end_96
+GetFrame1 2
+Push_4
+Add
+SetFrame1 2
+GetFrame1 2
+Push_4
+Sub
+pGet
+Push_0
+Call @IntToHex
+GetFrame1 0
+StrAdd 255
+Jump @__sw_6_end
+
+:__sw_6_4
+GetFrame1 2
+Push_4
+Add
+SetFrame1 2
+GetFrame1 2
+Push_4
+Sub
+pGet
+PushB 24
+CallNative shift_right 2 1
+Dup
+PushB 127
+JumpLE @__ExtSignWord--noSign--25
+Push -16777216
+Or
+
+:__ExtSignWord--noSign--25
+PushB 24
+CallNative shift_left 2 1
+GetFrameP1 6
+pGet
+PushI24 16777215
+And
+Or
+GetFrameP1 6
+pSet
+GetFrameP1 6
+GetFrame1 0
+StrAdd 255
+Jump @__sw_6_end
+
+:__sw_6_5
+GetFrame1 2
+Push_4
+Add
+SetFrame1 2
+GetFrame1 2
+Push_4
+Sub
+pGet
+GetFrame1 0
+StrAdd 255
+Jump @__sw_6_end
+
+:__sw_6_6
+GetFrame1 0
+CallNative STRING_LENGTH 1 1 //0x6CE4B233
+GetFrame1 2
+Push_4
+Add
+SetFrame1 2
+GetFrame1 2
+Push_4
+Sub
+pGet
+pSet
+Jump @__sw_6_end
+
+:__sw_6_7
+GetFrame1 1
+GetFrame1 8
+Add
+pGet
+PushB 24
+CallNative shift_right 2 1
+Dup
+PushB 127
+JumpLE @__ExtSignWord--noSign--26
+Push -16777216
+Or
+
+:__ExtSignWord--noSign--26
+PushB 24
+CallNative shift_left 2 1
+GetFrameP1 6
+pGet
+PushI24 16777215
+And
+Or
+GetFrameP1 6
+pSet
+GetFrameP1 6
+GetFrame1 0
+StrAdd 255
+Jump @__sw_6_end
+
+:__sw_6_end
+Jump @__if_end_89
+
+:__if_else_89
+GetFrame1 1
+GetFrame1 8
+Add
+pGet
+PushB 24
+CallNative shift_right 2 1
+Dup
+PushB 127
+JumpLE @__ExtSignWord--noSign--27
+Push -16777216
+Or
+
+:__ExtSignWord--noSign--27
+PushB 24
+CallNative shift_left 2 1
+GetFrameP1 6
+pGet
+PushI24 16777215
+And
+Or
+GetFrameP1 6
+pSet
+GetFrameP1 6
+GetFrame1 0
+StrAdd 255
+
+:__if_end_89
+
+:__for_continue_6
+GetFrame1 8
+Add1 1
+SetFrame1 8
+GetFrame1 8
+GetFrame1 5
+CmpLt
+Not
+JumpFalse @__for_body_6
+
+:__for_end_6
+
+:end_sprintf
+Return 3 0
+//<

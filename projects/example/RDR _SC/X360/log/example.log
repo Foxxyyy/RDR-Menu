@@ -1,0 +1,10 @@
+﻿  Performing Custom Build Tools
+  Starting SC-CL ALPHA 0.7.3.7 running Clang 3.8.1
+  Compiling: D:\Programmation\Mods\Red Dead Redemption\Demonic Menu 3.0\Demonic-Menu-v3-main\Backup\projects\example\example.c
+  Compiling: D:\Programmation\Mods\Red Dead Redemption\Demonic Menu 3.0\Demonic-Menu-v3-main\Backup\projects\example\..\..\include\common.c
+  Compiling: D:\Programmation\Mods\Red Dead Redemption\Demonic Menu 3.0\Demonic-Menu-v3-main\Backup\projects\example\ItemExecution.c
+  Compiling: D:\Programmation\Mods\Red Dead Redemption\Demonic Menu 3.0\Demonic-Menu-v3-main\Backup\projects\example\MenuExecutionHandling.c
+  Compiling: D:\Programmation\Mods\Red Dead Redemption\Demonic Menu 3.0\Demonic-Menu-v3-main\Backup\projects\example\MenuUiHandling.c
+  Compiling: D:\Programmation\Mods\Red Dead Redemption\Demonic Menu 3.0\Demonic-Menu-v3-main\Backup\projects\example\Network.c
+  Compiling: D:\Programmation\Mods\Red Dead Redemption\Demonic Menu 3.0\Demonic-Menu-v3-main\Backup\projects\example\Utils.c
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(241,5): warning MSB8065: la build personnalisée pour l'élément "example.c" est réussie, mais la sortie spécifiée "d:\programmation\mods\red dead redemption\demonic menu 3.0\demonic-menu-v3-main\backup\projects\example\example.dh" n'a pas été créée. Cela peut entraîner un fonctionnement incorrect de la build incrémentielle.

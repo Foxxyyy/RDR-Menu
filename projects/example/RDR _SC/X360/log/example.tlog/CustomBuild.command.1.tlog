@@ -1,0 +1,2 @@
+^D:\PROGRAMMATION\MODS\RED DEAD REDEMPTION\DEMONIC MENU 3.0\DEMONIC-MENU-V3-MAIN\BACKUP\PROJECTS\EXAMPLE\EXAMPLE.C
+"../../bin/SC-CL.exe" -platform=X360 -emit-asm -target=RDR_#SC -out-dir="D:\Programmation\Mods\Red Dead Redemption\Demonic Menu 3.0\Demonic-Menu-v3-main\Backup\projects\example\RDR _SC\X360\bin\\" -vcx="example.vcxproj" -- -I "../../include/"
