@@ -1,6 +1,5 @@
 # RDR Menu
-New mod menu base source for Red Dead Redemption
-
-Made by Sockstress / Im Foxxyyy / CabooseSayzWTF
+A mod menu base for RDR1...
+Made by Sockstress & Im Foxxyyy. Thanks to CabooseSayzWTF
 
 ![Screenshot](screenshot.png)
