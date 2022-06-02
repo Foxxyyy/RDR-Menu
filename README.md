@@ -1,5 +1,5 @@
 # RDR Menu
-A mod menu base for RDR1...
-Made by Sockstress & Im Foxxyyy. Thanks to CabooseSayzWTF
+Menu base for RDR1
+Made by Sockstress & me. Also thanks to CabooseSayzWTF
 
 ![Screenshot](screenshot.png)
