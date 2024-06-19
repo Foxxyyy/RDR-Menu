@@ -94,6 +94,7 @@ typedef struct Page
 	int BitSet;
 	int TotalItemCount;
 	int CurrentMenuLevel;
+	int CurrentMenuOption;
 	int Context;
 	MenuLevel Level[MaxMenuLevels];
 	ItemContainer Item[16];
@@ -112,7 +113,7 @@ inline void ShutDownMenu();
 inline void OpenMenuControls();
 void UpdateMenuLevel(int directionandamount, void* param, int cursorIndex);
 void ParseMenuControls();
-void DoNeededStuff();
+void InitControls();
 void SetSubtitle(char* subtitle);
 unsafe bool CheckPlayerEvent(int slot, int bitEvent);
 unsafe int GetVolumeValue(int slot);

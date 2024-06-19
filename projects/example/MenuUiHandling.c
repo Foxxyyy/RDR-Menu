@@ -39,13 +39,7 @@ Page* GetMenuContainer()
 
 inline void SetCursorIndex(int index) //Set the current menu index
 {
-	if (IS_PS3())
-	{
-		//Need to get PS3 offsets or use NET_PLAYER_LIST_SET_HIGHLIGHT
-		return;
-	}
-	int hudGamerList = GET_GAME_EDITION() == 9 ? 0x830981F4 : 0x83098254; //9 is original, 10 is undead
-	*(int*)(*(int*)hudGamerList + 0x30) = index;
+	Container.CurrentMenuOption = index;
 }
 
 bool HasPlayerOpenedMenu() //LB + RS
@@ -251,27 +245,28 @@ void ParseMenuControls()
 	}
 }
 
-void DoNeededStuff() //Random stuff that we should use when menu is open
+void InitControls()
 {
-	HUD_CLEAR_HELP_QUEUE(); //Gets ride of PRINT_HELP
-	DECOR_SET_BOOL(MySelf, "DISABLE_HORSE_WHISTLE", true); //Disables whistling when menu is open
-	CANCEL_CURRENTLY_PLAYING_AMBIENT_SPEECH(MySelf); //Disables speeches when menu is open (animation is still visible)
-	_ACTOR_ALLOW_BUMP_REACTIONS(MySelf, false); //Disables bump reactions
+	HUD_CLEAR_HELP_QUEUE(); //Clear PRINT_HELP messages
+	DECOR_SET_BOOL(MySelf, "DISABLE_HORSE_WHISTLE", true); //Disable whistling when menu is open
+	CANCEL_CURRENTLY_PLAYING_AMBIENT_SPEECH(MySelf); //Disable player speeches when menu is open (animation still visible)
+	_ACTOR_ALLOW_BUMP_REACTIONS(MySelf, false); //Remove bump reactions
 
+	//Disable player controls if we don't move the joystick (0.2 if joystick drifts)
 	if (GET_STICK_X(GetPlayerController(), false, 0) > 0.2f || GET_STICK_X(GetPlayerController(), false, 0) < -0.2f || GET_STICK_Y(GetPlayerController(), false, 0) > 0.2f || GET_STICK_Y(GetPlayerController(), false, 0) < -0.2f)
 		SET_PLAYER_CONTROL(0, true, false, false);
 	else
 		SET_PLAYER_CONTROL(0, false, true, true);
 }
 
-void SetSubtitle(char* subtitle) //Set the subtitle
+void SetSubtitle(char* subtitle) //Set the menu subtitle
 {
 	int* subtitlePointer = getGlobalPtrAtIndex(76905);
 	strcpy((const char*)subtitlePointer, subtitle, 64);
 	NET_PLAYER_LIST_SET_DESCRIPTION((const char*)subtitlePointer);
 }
 
-unsafe bool CheckPlayerEvent(int slot, int bitEvent) //Checks bits from in-game events
+unsafe bool CheckPlayerEvent(int slot, int bitEvent) //Check if a event flag is set for a specific player slot
 {
 	__getFrame(0);
 	__getGlobalP(76943);
@@ -286,7 +281,7 @@ unsafe bool CheckPlayerEvent(int slot, int bitEvent) //Checks bits from in-game 
 	return __popI();
 }
 
-unsafe int GetVolumeValue(int slot) //Return the region value from the defined slot id
+unsafe int GetVolumeValue(int slot) //Get the sector area ID for a specific player slot
 {
 	__getFrame(0);
 	__getGlobalP(76943);
@@ -294,17 +289,17 @@ unsafe int GetVolumeValue(int slot) //Return the region value from the defined s
 	return __popI();
 }
 
-void DrawMenu() //There's a lot to handle
+void DrawMenu() //The function where we actually display the menu
 {
-	int framesPerSecond = (1.0f / GET_LAST_FRAME_TIME()); //Fps counter
+	int framesPerSecond = (1.0f / GET_LAST_FRAME_TIME());
 	char buffer[256]; //Global menu buffer
 	char str[64]; //Global columnas buffer
 
-	//In case index is going crazy we're setting it back to 0
+	//Set the menu index back to 0 if it goes beyond the limits
 	if (GetCursorIndex + 1 > Container.TotalItemCount)
 		SetCursorIndex(0);
 
-	//Clear menu items
+	//Clear menu items (removes everything from the player list)
 	NET_PLAYER_LIST_RESET();
 
 	//Prompts - Game Informations
@@ -315,7 +310,7 @@ void DrawMenu() //There's a lot to handle
 	NET_PLAYER_LIST_SET_TITLE("Generic_Dbuffer64_0");
 
 	//Subheader
-	if (Container.MenuTemplate != 7) //Text doesn't really fit for UI Style 7
+	if (Container.MenuTemplate != 7) //Text doesn't really fit for UI style 7
 		UI_SET_STRING_FORMAT("Generic_Dbuffer128_0", "Welcome %s <green>(%i/%i)</green>", MyName, (const char*)GetCursorIndex + 1, (const char*)Container.TotalItemCount);
 	else
 		UI_SET_STRING_FORMAT("Generic_Dbuffer128_0", "<green>(%i/%i)</green>", (const char*)GetCursorIndex + 1, (const char*)Container.TotalItemCount, NULL);
@@ -334,13 +329,14 @@ void DrawMenu() //There's a lot to handle
 				break;
 		}
 		NET_PLAYER_LIST_ADD_ITEM(buffer, i); //Draw item text at defined menu slot
-		_UI_SET_ITEM_COLOR(Container.ScrollBarColor); //Use defined scrollbar color (have to be used for each items)
+		_UI_SET_ITEM_COLOR(Container.ScrollBarColor); //Use defined scrollbar color (has to be set on each menu item)
 		NET_PLAYER_LIST_SET_TEMPLATE(Container.MenuTemplate); //Set up the menu style
 		NET_PLAYER_LIST_SET_HEADER(1, "");
 		NET_PLAYER_LIST_SET_HEADER(2, "");
 		NET_PLAYER_LIST_SET_HEADER(3, "");
 		NET_PLAYER_LIST_SET_HEADER(4, "");
 		UI_DISABLE_INPUT(MenuLayer); //Disable all UI inputs
+		NET_PLAYER_LIST_SET_HIGHLIGHT(Container.CurrentMenuOption); //Set the current menu index
 
 		switch (Container.Item[j].Selection.Type) //Current item type (have to be used after item is drawn to work properly)
 		{
@@ -361,9 +357,9 @@ void DrawMenu() //There's a lot to handle
 				sprintf(str, "%s", GetRegion(GetVolumeValue(Container.Item[j].Selection.DynamicId))); //Get the current slot region from its volume
 				_UI_DRAW_RIGHT_TEXT(0, str); //Display region
 
-				if (CheckPlayerEvent(Container.Item[j].Selection.DynamicId, 131072)) //Detect if someone is most wanted
+				if (CheckPlayerEvent(Container.Item[j].Selection.DynamicId, 0x20000)) //Detect if someone is most wanted
 					_UI_DRAW_RIGHT_TEXT(1, "<SKULL>"); //Display most wanted blip
-				else if (CheckPlayerEvent(Container.Item[j].Selection.DynamicId, 134217728)) //Detect if someone is playing land grab
+				else if (CheckPlayerEvent(Container.Item[j].Selection.DynamicId, 0x8000000)) //Detect if someone is playing land grab
 					_UI_DRAW_RIGHT_TEXT(1, "<MP_DEFEND>"); //Display land grab blip
 				break;
 			}
@@ -389,7 +385,7 @@ void HandleMenuUi()
 	{
 		ParseMenuControls();
 		DrawMenu();
-		DoNeededStuff();
+		InitControls();
 	}
 	else
 	{
@@ -426,7 +422,6 @@ void HandleMenuUi()
 			UI_SET_STRING("Generic_Dbuffer128_0", "");
 			SetSubtitle("Generic_Dbuffer128_0");
 
-			//UI_DISABLE_INPUT(MenuLayer); //Disable all inputs from the playerlist - not needed anymore
 			UI_UNFOCUS(MenuLayer);
 			WAIT(0);
 		}

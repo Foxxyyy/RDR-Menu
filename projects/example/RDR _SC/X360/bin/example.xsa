@@ -1,5 +1,5 @@
 //> Default Static Information
-SetStaticsCount 262
+SetStaticsCount 263
 SetStaticName 0 selectedPlayerId
 SetStaticName 1 selectedPlayerId
 SetStaticName 2 Container
@@ -7,9 +7,9 @@ SetStaticName 3 AddItemCounter
 SetStaticName 4 Container
 SetDefaultStatic 16 10
 SetDefaultStatic 17 4
-SetStaticName 250 selectedPlayerId
-SetStaticName 251 boolTest
-SetStaticName 252 LastMenuLevelOption
+SetStaticName 251 selectedPlayerId
+SetStaticName 252 boolTest
+SetStaticName 253 LastMenuLevelOption
 //<
 
 :__builtin__entryPoint//>
@@ -17,7 +17,7 @@ Function 0 2
 PushString "<blue>"
 SetStatic1 15
 Push GetFuncLoc("ExecutionEntry")
-SetStatic1 22
+SetStatic1 23
 Call @main
 Return 0 0
 //<
@@ -25,18 +25,18 @@ Return 0 0
 :IntToHex//>
 Function 2 8
 GetFrame1 1
-JumpFalse @__if_else_0
+JumpFalse @__if_else_3
 
-:__if_then_0
+:__if_then_3
 PushString "0123456789ABCDEF"
 SetFrame1 4
-Jump @__if_end_0
+Jump @__if_end_3
 
-:__if_else_0
+:__if_else_3
 PushString "0123456789abcdef"
 SetFrame1 4
 
-:__if_end_0
+:__if_end_3
 GetFrameP1 0
 SetFrame1 5
 PushString "         "
@@ -208,33 +208,10 @@ Return 0 1
 //<
 
 :SetCursorIndex//>
-Function 1 4
-CallNative IS_PS3 0 1 //0xA369B36F
-JumpFalse @__if_end_30
-
-:__if_then_30
-Return 1 0
-
-:__if_end_30
-CallNative GET_GAME_EDITION 0 1 //0xB5401D4A
-PushB 9
-CmpEq
-JumpFalse @__cond_false_5
-
-:__cond_true_5
-Push -2096528908
-Jump @__cond_end_5
-
-:__cond_false_5
-Push -2096528812
-
-:__cond_end_5
-SetFrame1 3
+Function 1 3
 GetFrame1 0
-GetFrame1 3
-pGet
-PushB 48
-Add
+GetStaticP1 4
+GetImmP1 17
 pSet
 Return 1 0
 //<
@@ -244,15 +221,15 @@ Function 0 2
 Call @GetPlayerController
 PushB3 10 1 0
 CallNative IS_BUTTON_PRESSED 4 1 //0x7BCB3F15
-JumpFalse @__if_end_31
+JumpFalse @__if_end_33
 
-:__if_then_31
+:__if_then_33
 Call @GetPlayerController
 PushB3 2 1 0
 CallNative IS_BUTTON_DOWN 4 1 //0xC3297B50
 Return 0 1
 
-:__if_end_31
+:__if_end_33
 Push_0
 Return 0 1
 //<
@@ -281,27 +258,27 @@ CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
 Push_1
 CallNative _ACTOR_ALLOW_BUMP_REACTIONS 2 0 //0xC52B5F18
 GetStaticP1 4
-GetImmP1 17
+GetImmP1 18
 pGet
 CallNative IS_SCRIPT_USE_CONTEXT_VALID 1 1 //0x115CD0CC
-JumpFalse @__if_end_32
+JumpFalse @__if_end_34
 
-:__if_then_32
+:__if_then_34
 GetStaticP1 4
-GetImmP1 17
+GetImmP1 18
 pGet
 CallNative RELEASE_SCRIPT_USE_CONTEXT 1 0 //0x4F52CB58
 
-:__if_end_32
+:__if_end_34
 Return 0 0
 //<
 
 :OpenMenuControls//>
 Function 0 2
 Call @HasPlayerOpenedMenu
-JumpFalse @__if_else_33
+JumpFalse @__if_else_35
 
-:__if_then_33
+:__if_then_35
 GetStaticP1 4
 GetImmP1 14
 Dup
@@ -317,13 +294,13 @@ Push_1
 And
 Push_0
 CmpNe
-JumpFalse @__if_else_34
+JumpFalse @__if_else_36
 
-:__if_then_34
+:__if_then_36
 Call @ShutDownMenu
-Jump @__if_end_34
+Jump @__if_end_36
 
-:__if_else_34
+:__if_else_36
 GetStaticP1 4
 GetImmP1 14
 Dup
@@ -355,13 +332,13 @@ Push_-1
 Push_0
 CallNative ADD_SCRIPT_USE_CONTEXT 9 1 //0xD7591B0E
 GetStaticP1 4
-GetImmP1 17
+GetImmP1 18
 pSet
 
-:__if_end_34
-Jump @__if_end_33
+:__if_end_36
+Jump @__if_end_35
 
-:__if_else_33
+:__if_else_35
 GetStaticP1 4
 GetImmP1 14
 pGet
@@ -369,9 +346,9 @@ Push_2
 And
 Push_0
 CmpNe
-JumpFalse @__if_end_35
+JumpFalse @__if_end_37
 
-:__if_then_35
+:__if_then_37
 GetStaticP1 4
 GetImmP1 14
 Dup
@@ -381,23 +358,23 @@ And
 pPeekSet
 Drop
 
-:__if_end_35
+:__if_end_37
 
-:__if_end_33
+:__if_end_35
 Push_0
 CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
 PushString "DISABLE_HORSE_WHISTLE"
 CallNative DECOR_CHECK_EXIST 2 1 //0xA0773F5C
-JumpFalse @__if_end_36
+JumpFalse @__if_end_38
 
-:__if_then_36
+:__if_then_38
 Push_0
 CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
 PushString "DISABLE_HORSE_WHISTLE"
 CallNative DECOR_REMOVE 2 1 //0xE0E2640B
 Drop
 
-:__if_end_36
+:__if_end_38
 Return 0 0
 //<
 
@@ -406,15 +383,15 @@ Function 3 5
 GetFrame1 0
 Push_0
 CmpGt
-JumpFalse @__if_else_37
+JumpFalse @__if_else_39
 
-:__pcf_64
+:__pcf_67
 GetFrame1 0
 PushB 10
 CmpLe
-JumpFalse @__if_else_37
+JumpFalse @__if_else_39
 
-:__if_then_37
+:__if_then_39
 GetStaticP1 4
 GetImmP1 14
 Dup
@@ -432,7 +409,7 @@ GetImmP1 16
 pSet
 GetFrame1 1
 GetStaticP1 4
-GetImmP1 18
+GetImmP1 19
 GetStaticP1 4
 GetImmP1 16
 pGet
@@ -447,18 +424,18 @@ GetImmP1 16
 pGet
 PushB 10
 CmpLt
-JumpFalse @__if_end_38
+JumpFalse @__if_end_40
 
-:__if_then_38
+:__if_then_40
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 2
 Mult1 13
 GetImmP
 GetImmP1 1
 pGet
 GetStaticP1 4
-GetImmP1 18
+GetImmP1 19
 GetStaticP1 4
 GetImmP1 16
 pGet
@@ -468,7 +445,7 @@ GetImmP1 0
 pSet
 GetFrame1 1
 GetStaticP1 4
-GetImmP1 18
+GetImmP1 19
 GetStaticP1 4
 GetImmP1 16
 pGet
@@ -478,22 +455,22 @@ GetImmP1 0
 pGet
 PCall
 
-:__if_end_38
-Jump @__if_end_37
+:__if_end_40
+Jump @__if_end_39
 
-:__if_else_37
+:__if_else_39
 GetFrame1 0
 Push_0
 CmpLt
-JumpFalse @__if_end_39
+JumpFalse @__if_end_41
 
-:__pcf_68
+:__pcf_71
 GetFrame1 0
 PushS -10
 CmpGe
-JumpFalse @__if_end_39
+JumpFalse @__if_end_41
 
-:__if_then_39
+:__if_then_41
 GetStaticP1 4
 GetImmP1 14
 Dup
@@ -507,13 +484,13 @@ GetImmP1 16
 pGet
 Push_0
 CmpEq
-JumpFalse @__if_else_40
+JumpFalse @__if_else_42
 
-:__if_then_40
+:__if_then_42
 Call @ShutDownMenu
 Return 3 0
 
-:__if_else_40
+:__if_else_42
 GetStaticP1 4
 GetImmP1 16
 pGet
@@ -521,7 +498,7 @@ Add2 -1
 GetStaticP1 4
 GetImmP1 16
 pSet
-GetStaticP1 252
+GetStaticP1 253
 GetStaticP1 4
 GetImmP1 16
 pGet
@@ -530,7 +507,7 @@ GetImmP
 pGet
 Call @SetCursorIndex
 GetStaticP1 4
-GetImmP1 18
+GetImmP1 19
 GetStaticP1 4
 GetImmP1 16
 pGet
@@ -540,13 +517,13 @@ GetImmP1 0
 pGet
 Push_0
 CmpNe
-JumpFalse @__if_end_41
+JumpFalse @__if_end_43
 
-:__if_then_41
+:__if_then_43
 Push_0
 PushB2 0 2
 GetStaticP1 4
-GetImmP1 18
+GetImmP1 19
 GetStaticP1 4
 GetImmP1 16
 pGet
@@ -557,7 +534,7 @@ GetImmP
 FromStack
 GetFrame1 1
 GetStaticP1 4
-GetImmP1 18
+GetImmP1 19
 GetStaticP1 4
 GetImmP1 16
 pGet
@@ -567,11 +544,11 @@ GetImmP1 0
 pGet
 PCall
 
+:__if_end_43
+
 :__if_end_41
 
 :__if_end_39
-
-:__if_end_37
 Return 3 0
 //<
 
@@ -582,7 +559,7 @@ Push_0
 CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
 SetFrame1 2
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 2
 Mult1 13
 GetImmP
@@ -595,9 +572,9 @@ And
 Push_0
 CmpNe
 Not
-JumpFalse @__if_end_42
+JumpFalse @__if_end_44
 
-:__if_then_42
+:__if_then_44
 GetFrame1 3
 GetImmP1 4
 GetImmP1 0
@@ -611,9 +588,9 @@ Jump @__sw_0_def
 Call @GetPlayerController
 PushB3 15 1 0
 CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
-JumpFalse @__if_else_43
+JumpFalse @__if_else_45
 
-:__if_then_43
+:__if_then_45
 GetFrame1 3
 GetImmP1 4
 GetImmP1 3
@@ -626,9 +603,9 @@ GetImmP1 7
 GetImmP1 0
 pGet
 CmpLe
-JumpFalse @__if_else_44
+JumpFalse @__if_else_46
 
-:__if_then_44
+:__if_then_46
 GetFrame1 3
 GetImmP1 4
 GetImmP1 8
@@ -640,9 +617,97 @@ GetImmP1 3
 GetImmP1 0
 pGet
 pSet
-Jump @__if_end_44
+Jump @__if_end_46
 
-:__if_else_44
+:__if_else_46
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+Dup
+pGet
+GetFrame1 4
+PushB 8
+CmpEq
+JumpFalse @__cond_false_5
+
+:__cond_true_5
+Push_1
+Jump @__cond_end_5
+
+:__cond_false_5
+GetFrame1 3
+GetImmP1 4
+GetImmP1 4
+GetImmP1 0
+pGet
+
+:__cond_end_5
+Sub
+pPeekSet
+Drop
+
+:__if_end_46
+GetFrame1 3
+GetImmP1 0
+pGet
+Push_1
+And
+Push_0
+CmpNe
+JumpFalse @__if_end_47
+
+:__if_then_47
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+GetFrame1 3
+GetImmP1 1
+pGet
+PCall
+
+:__if_end_47
+Jump @__if_end_45
+
+:__if_else_45
+Call @GetPlayerController
+PushB3 13 1 0
+CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
+JumpFalse @__if_end_48
+
+:__if_then_48
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 8
+GetImmP1 0
+pGet
+CmpGe
+JumpFalse @__if_else_49
+
+:__if_then_49
+GetFrame1 3
+GetImmP1 4
+GetImmP1 7
+GetImmP1 0
+pGet
+GetFrame1 3
+GetImmP1 4
+GetImmP1 3
+GetImmP1 0
+pGet
+pSet
+Jump @__if_end_49
+
+:__if_else_49
 GetFrame1 3
 GetImmP1 4
 GetImmP1 3
@@ -667,99 +732,11 @@ GetImmP1 0
 pGet
 
 :__cond_end_6
-Sub
-pPeekSet
-Drop
-
-:__if_end_44
-GetFrame1 3
-GetImmP1 0
-pGet
-Push_1
-And
-Push_0
-CmpNe
-JumpFalse @__if_end_45
-
-:__if_then_45
-GetFrame1 3
-GetImmP1 4
-GetImmP1 3
-GetImmP1 0
-pGet
-GetFrame1 3
-GetImmP1 1
-pGet
-PCall
-
-:__if_end_45
-Jump @__if_end_43
-
-:__if_else_43
-Call @GetPlayerController
-PushB3 13 1 0
-CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
-JumpFalse @__if_end_46
-
-:__if_then_46
-GetFrame1 3
-GetImmP1 4
-GetImmP1 3
-GetImmP1 0
-pGet
-pGet
-GetFrame1 3
-GetImmP1 4
-GetImmP1 8
-GetImmP1 0
-pGet
-CmpGe
-JumpFalse @__if_else_47
-
-:__if_then_47
-GetFrame1 3
-GetImmP1 4
-GetImmP1 7
-GetImmP1 0
-pGet
-GetFrame1 3
-GetImmP1 4
-GetImmP1 3
-GetImmP1 0
-pGet
-pSet
-Jump @__if_end_47
-
-:__if_else_47
-GetFrame1 3
-GetImmP1 4
-GetImmP1 3
-GetImmP1 0
-pGet
-Dup
-pGet
-GetFrame1 4
-PushB 8
-CmpEq
-JumpFalse @__cond_false_7
-
-:__cond_true_7
-Push_1
-Jump @__cond_end_7
-
-:__cond_false_7
-GetFrame1 3
-GetImmP1 4
-GetImmP1 4
-GetImmP1 0
-pGet
-
-:__cond_end_7
 Add
 pPeekSet
 Drop
 
-:__if_end_47
+:__if_end_49
 GetFrame1 3
 GetImmP1 0
 pGet
@@ -767,9 +744,9 @@ Push_1
 And
 Push_0
 CmpNe
-JumpFalse @__if_end_48
+JumpFalse @__if_end_50
 
-:__if_then_48
+:__if_then_50
 GetFrame1 3
 GetImmP1 4
 GetImmP1 3
@@ -780,20 +757,20 @@ GetImmP1 1
 pGet
 PCall
 
+:__if_end_50
+
 :__if_end_48
 
-:__if_end_46
-
-:__if_end_43
+:__if_end_45
 Jump @__sw_0_end
 
 :__sw_0_1
 Call @GetPlayerController
 PushB3 15 1 0
 CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
-JumpFalse @__if_else_49
+JumpFalse @__if_else_51
 
-:__if_then_49
+:__if_then_51
 GetFrame1 3
 GetImmP1 4
 GetImmP1 3
@@ -808,9 +785,9 @@ pGet
 PushF 0.000015
 FAdd
 FCmpLe
-JumpFalse @__if_else_50
+JumpFalse @__if_else_52
 
-:__if_then_50
+:__if_then_52
 GetFrame1 3
 GetImmP1 4
 GetImmP1 8
@@ -822,9 +799,9 @@ GetImmP1 3
 GetImmP1 0
 pGet
 pSet
-Jump @__if_end_50
+Jump @__if_end_52
 
-:__if_else_50
+:__if_else_52
 GetFrame1 3
 GetImmP1 4
 GetImmP1 3
@@ -841,7 +818,7 @@ FSub
 pPeekSet
 Drop
 
-:__if_end_50
+:__if_end_52
 GetFrame1 3
 GetImmP1 0
 pGet
@@ -849,9 +826,9 @@ Push_1
 And
 Push_0
 CmpNe
-JumpFalse @__if_end_51
+JumpFalse @__if_end_53
 
-:__if_then_51
+:__if_then_53
 GetFrame1 3
 GetImmP1 4
 GetImmP1 3
@@ -862,16 +839,16 @@ GetImmP1 1
 pGet
 PCall
 
-:__if_end_51
-Jump @__if_end_49
+:__if_end_53
+Jump @__if_end_51
 
-:__if_else_49
+:__if_else_51
 Call @GetPlayerController
 PushB3 13 1 0
 CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
-JumpFalse @__if_end_52
+JumpFalse @__if_end_54
 
-:__if_then_52
+:__if_then_54
 GetFrame1 3
 GetImmP1 4
 GetImmP1 3
@@ -884,9 +861,9 @@ GetImmP1 8
 GetImmP1 0
 pGet
 FCmpGe
-JumpFalse @__if_else_53
+JumpFalse @__if_else_55
 
-:__if_then_53
+:__if_then_55
 GetFrame1 3
 GetImmP1 4
 GetImmP1 7
@@ -898,9 +875,9 @@ GetImmP1 3
 GetImmP1 0
 pGet
 pSet
-Jump @__if_end_53
+Jump @__if_end_55
 
-:__if_else_53
+:__if_else_55
 GetFrame1 3
 GetImmP1 4
 GetImmP1 3
@@ -917,7 +894,7 @@ FAdd
 pPeekSet
 Drop
 
-:__if_end_53
+:__if_end_55
 GetFrame1 3
 GetImmP1 0
 pGet
@@ -925,9 +902,9 @@ Push_1
 And
 Push_0
 CmpNe
-JumpFalse @__if_end_54
+JumpFalse @__if_end_56
 
-:__if_then_54
+:__if_then_56
 GetFrame1 3
 GetImmP1 4
 GetImmP1 3
@@ -938,11 +915,11 @@ GetImmP1 1
 pGet
 PCall
 
+:__if_end_56
+
 :__if_end_54
 
-:__if_end_52
-
-:__if_end_49
+:__if_end_51
 Jump @__sw_0_end
 
 :__sw_0_def
@@ -952,9 +929,9 @@ Jump @__sw_0_end
 Call @GetPlayerController
 PushB3 14 1 0
 CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
-JumpFalse @__if_end_55
+JumpFalse @__if_end_57
 
-:__if_then_55
+:__if_then_57
 PushString "HudGamerList"
 Push_0
 CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
@@ -964,45 +941,10 @@ pGet
 Push_2
 Sub
 CmpGt
-JumpFalse @__if_else_56
-
-:__if_then_56
-Push_0
-Call @SetCursorIndex
-Jump @__if_end_56
-
-:__if_else_56
-PushString "HudGamerList"
-Push_0
-CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
-Push_1
-Add
-Call @SetCursorIndex
-
-:__if_end_56
-PushString "HUD_MENU_NAV_DOWN_MASTER"
-CallNative PLAY_SOUND_FRONTEND 1 0 //0x2E458F74
-
-:__if_end_55
-Call @GetPlayerController
-PushB3 12 1 0
-CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
-JumpFalse @__if_end_57
-
-:__if_then_57
-PushString "HudGamerList"
-Push_0
-CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
-Push_1
-CmpLt
 JumpFalse @__if_else_58
 
 :__if_then_58
-GetStaticP1 4
-GetImmP1 15
-pGet
-Push_1
-Sub
+Push_0
 Call @SetCursorIndex
 Jump @__if_end_58
 
@@ -1011,20 +953,55 @@ PushString "HudGamerList"
 Push_0
 CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
 Push_1
-Sub
+Add
 Call @SetCursorIndex
 
 :__if_end_58
-PushString "HUD_MENU_NAV_UP_MASTER"
+PushString "HUD_MENU_NAV_DOWN_MASTER"
 CallNative PLAY_SOUND_FRONTEND 1 0 //0x2E458F74
 
 :__if_end_57
 Call @GetPlayerController
-PushB3 6 1 0
+PushB3 12 1 0
 CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
 JumpFalse @__if_end_59
 
 :__if_then_59
+PushString "HudGamerList"
+Push_0
+CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
+Push_1
+CmpLt
+JumpFalse @__if_else_60
+
+:__if_then_60
+GetStaticP1 4
+GetImmP1 15
+pGet
+Push_1
+Sub
+Call @SetCursorIndex
+Jump @__if_end_60
+
+:__if_else_60
+PushString "HudGamerList"
+Push_0
+CallNative UI_GET_SELECTED_INDEX 2 1 //0x8B63A008
+Push_1
+Sub
+Call @SetCursorIndex
+
+:__if_end_60
+PushString "HUD_MENU_NAV_UP_MASTER"
+CallNative PLAY_SOUND_FRONTEND 1 0 //0x2E458F74
+
+:__if_end_59
+Call @GetPlayerController
+PushB3 6 1 0
+CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
+JumpFalse @__if_end_61
+
+:__if_then_61
 PushString "HUD_MENU_SELECT_MASTER"
 CallNative PLAY_SOUND_FRONTEND 1 0 //0x2E458F74
 GetFrame1 4
@@ -1046,9 +1023,9 @@ Call @IS_BIT_SET
 SetFrame1 5
 GetFrame1 5
 Not
-JumpFalse @__if_else_60
+JumpFalse @__if_else_62
 
-:__if_then_60
+:__if_then_62
 GetFrame1 3
 GetImmP1 4
 GetImmP1 3
@@ -1059,9 +1036,9 @@ GetImmP1 4
 GetImmP1 5
 pGet
 Call @SET_BIT
-Jump @__if_end_60
+Jump @__if_end_62
 
-:__if_else_60
+:__if_else_62
 GetFrame1 3
 GetImmP1 4
 GetImmP1 3
@@ -1073,15 +1050,15 @@ GetImmP1 5
 pGet
 Call @CLEAR_BIT
 
-:__if_end_60
+:__if_end_62
 GetFrame1 3
 GetImmP1 1
 pGet
 Push_0
 CmpNe
-JumpFalse @__if_end_61
+JumpFalse @__if_end_63
 
-:__if_then_61
+:__if_then_63
 GetFrame1 5
 Not
 GetFrame1 3
@@ -1089,13 +1066,13 @@ GetImmP1 1
 pGet
 PCall
 
-:__if_end_61
+:__if_end_63
 Return 0 0
 Jump @__sw_1_end
 
 :__sw_1_1
 GetFrame1 2
-GetStaticP1 252
+GetStaticP1 253
 GetStaticP1 4
 GetImmP1 16
 pGet
@@ -1106,27 +1083,27 @@ Push_1
 GetFrame1 4
 Push_6
 CmpEq
-JumpFalse @__cond_false_8
+JumpFalse @__cond_false_7
 
-:__cond_true_8
+:__cond_true_7
 GetFrame1 3
 GetImmP1 4
 GetImmP1 2
 GetImmP1 0
 pGet
-Jump @__cond_end_8
+Jump @__cond_end_7
 
-:__cond_false_8
+:__cond_false_7
 Push_0
 
-:__cond_end_8
+:__cond_end_7
 GetFrame1 2
 Call @UpdateMenuLevel
 Return 0 0
 
 :__sw_1_2
 GetFrame1 2
-GetStaticP1 252
+GetStaticP1 253
 GetStaticP1 4
 GetImmP1 16
 pGet
@@ -1148,67 +1125,67 @@ GetImmP1 1
 pGet
 Push_0
 CmpNe
-JumpFalse @__if_end_62
+JumpFalse @__if_end_64
 
-:__if_then_62
+:__if_then_64
 GetFrame1 4
 Push_6
 CmpEq
 Not
-JumpFalse @__cond_true_9
+JumpFalse @__cond_true_8
 
-:__pcf_97
+:__pcf_100
 GetFrame1 4
 Push_1
 CmpEq
-JumpFalse @__cond_false_9
+JumpFalse @__cond_false_8
 
-:__cond_true_9
+:__cond_true_8
 GetFrame1 3
 GetImmP1 4
 GetImmP1 2
 GetImmP1 0
 pGet
-Jump @__cond_end_9
+Jump @__cond_end_8
 
-:__cond_false_9
+:__cond_false_8
 GetFrame1 3
 GetImmP1 4
 GetImmP1 3
 GetImmP1 0
 pGet
 
-:__cond_end_9
+:__cond_end_8
 GetFrame1 3
 GetImmP1 1
 pGet
 PCall
 
-:__if_end_62
+:__if_end_64
 
-:__if_end_59
+:__if_end_61
 GetFrame1 3
 GetImmP1 2
 GetImmP1 0
 pGet
-JumpFalse @__if_end_63
+JumpFalse @__if_end_65
 
-:__pcf_99
+:__pcf_102
 Call @GetPlayerController
 PushB3 7 1 0
 CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
-JumpFalse @__if_end_63
+JumpFalse @__if_end_65
 
-:__if_then_63
+:__if_then_65
 GetFrame1 3
 GetImmP1 2
 GetImmP1 0
 pGet
 Push_0
 CmpNe
-JumpFalse @__if_end_64
+JumpFalse @__if_end_66
 
-:__if_then_64
+:__if_then_66
 Push_0
 GetFrame1 3
 GetImmP1 2
@@ -1216,17 +1193,17 @@ GetImmP1 0
 pGet
 PCall
 
-:__if_end_64
+:__if_end_66
 
-:__if_end_63
+:__if_end_65
 
-:__if_end_42
+:__if_end_44
 Call @GetPlayerController
 PushB3 5 1 0
 CallNative IS_BUTTON_RELEASED 4 1 //0xB04EB731
-JumpFalse @__if_end_65
+JumpFalse @__if_end_67
 
-:__if_then_65
+:__if_then_67
 Push_-1
 Push_0
 GetFrame1 2
@@ -1234,11 +1211,11 @@ Call @UpdateMenuLevel
 PushString "HUD_MENU_BACK_MASTER"
 CallNative PLAY_SOUND_FRONTEND 1 0 //0x2E458F74
 
-:__if_end_65
+:__if_end_67
 Return 0 0
 //<
 
-:DoNeededStuff//>
+:InitControls//>
 Function 0 2
 CallNative HUD_CLEAR_HELP_QUEUE 0 0 //0x495164AD
 Push_0
@@ -1260,7 +1237,7 @@ CallNative GET_STICK_X 3 1 //0x9AAF7E28
 PushF 0.200000
 FCmpGt
 Not
-JumpFalse @__if_then_66
+JumpFalse @__if_then_68
 
 :__pct_12
 Call @GetPlayerController
@@ -1269,7 +1246,7 @@ CallNative GET_STICK_X 3 1 //0x9AAF7E28
 PushF -0.200000
 FCmpLt
 Not
-JumpFalse @__if_then_66
+JumpFalse @__if_then_68
 
 :__pct_11
 Call @GetPlayerController
@@ -1278,28 +1255,28 @@ CallNative GET_STICK_Y 3 1 //0x7C6D41A4
 PushF 0.200000
 FCmpGt
 Not
-JumpFalse @__if_then_66
+JumpFalse @__if_then_68
 
-:__pcf_104
+:__pcf_107
 Call @GetPlayerController
 PushB2 0 0
 CallNative GET_STICK_Y 3 1 //0x7C6D41A4
 PushF -0.200000
 FCmpLt
-JumpFalse @__if_else_66
+JumpFalse @__if_else_68
 
-:__if_then_66
+:__if_then_68
 PushB3 0 1 0
 Push_0
 CallNative SET_PLAYER_CONTROL 4 0 //0xD17AFCD8
-Jump @__if_end_66
+Jump @__if_end_68
 
-:__if_else_66
+:__if_else_68
 PushB3 0 0 1
 Push_1
 CallNative SET_PLAYER_CONTROL 4 0 //0xD17AFCD8
 
-:__if_end_66
+:__if_end_68
 Return 0 0
 //<
 
@@ -1356,13 +1333,13 @@ GetStaticP1 4
 GetImmP1 15
 pGet
 CmpGt
-JumpFalse @__if_end_67
+JumpFalse @__if_end_69
 
-:__if_then_67
+:__if_then_69
 Push_0
 Call @SetCursorIndex
 
-:__if_end_67
+:__if_end_69
 CallNative NET_PLAYER_LIST_RESET 0 0 //0x67031EDA
 PushString "Generic_Dbuffer128_1"
 PushString "<red>Host:</red> %s   <blue>Players:</blue> %i   <green>FPS:</green> %i"
@@ -1391,9 +1368,9 @@ GetImmP1 13
 pGet
 Push_7
 CmpNe
-JumpFalse @__if_else_68
+JumpFalse @__if_else_70
 
-:__if_then_68
+:__if_then_70
 PushString "Generic_Dbuffer128_0"
 PushString "Welcome %s <green>(%i/%i)</green>"
 Push_0
@@ -1407,9 +1384,9 @@ GetStaticP1 4
 GetImmP1 15
 pGet
 CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
-Jump @__if_end_68
+Jump @__if_end_70
 
-:__if_else_68
+:__if_else_70
 PushString "Generic_Dbuffer128_0"
 PushString "<green>(%i/%i)</green>"
 PushString "HudGamerList"
@@ -1423,7 +1400,7 @@ pGet
 Push_0
 CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
 
-:__if_end_68
+:__if_end_70
 PushString "Generic_Dbuffer128_0"
 Call @SetSubtitle
 GetStaticP1 4
@@ -1441,7 +1418,7 @@ JumpFalse @__for_end_3
 
 :__for_body_3
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1458,7 +1435,7 @@ GetStaticP1 4
 GetImmP1 11
 pGet
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1479,7 +1456,7 @@ GetStaticP1 4
 GetImmP1 11
 pGet
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1522,7 +1499,11 @@ CallNative NET_PLAYER_LIST_SET_HEADER 2 0 //0xFA382FCB
 PushString "HudGamerList"
 CallNative UI_DISABLE_INPUT 1 0 //0x9E2C2701
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 17
+pGet
+CallNative NET_PLAYER_LIST_SET_HIGHLIGHT 1 0 //0xAAE9E6B
+GetStaticP1 4
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1536,7 +1517,7 @@ Jump @__sw_3_end
 GetFrameP1 67
 PushString "[%i]"
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1559,7 +1540,7 @@ Jump @__sw_3_end
 GetFrameP1 67
 PushString "[%s]"
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1570,7 +1551,7 @@ pGet
 pGet
 Push_1
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1592,7 +1573,7 @@ Jump @__sw_3_end
 GetFrameP1 67
 PushString "[%s]"
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1601,7 +1582,7 @@ GetImmP1 4
 GetImmP1 0
 pGet
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1627,7 +1608,7 @@ Jump @__sw_3_end
 GetFrameP1 67
 PushString "%s"
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1645,7 +1626,7 @@ GetFrameP1 67
 CallNative _UI_DRAW_RIGHT_TEXT 2 1 //0xC673362C
 Drop
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1654,18 +1635,18 @@ GetImmP1 1
 pGet
 PushI24 131072
 Call @CheckPlayerEvent
-JumpFalse @__if_else_69
+JumpFalse @__if_else_71
 
-:__if_then_69
+:__if_then_71
 Push_1
 PushString "<SKULL>"
 CallNative _UI_DRAW_RIGHT_TEXT 2 1 //0xC673362C
 Drop
-Jump @__if_end_69
+Jump @__if_end_71
 
-:__if_else_69
+:__if_else_71
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1674,22 +1655,22 @@ GetImmP1 1
 pGet
 Push 134217728
 Call @CheckPlayerEvent
-JumpFalse @__if_end_70
+JumpFalse @__if_end_72
 
-:__if_then_70
+:__if_then_72
 Push_1
 PushString "<MP_DEFEND>"
 CallNative _UI_DRAW_RIGHT_TEXT 2 1 //0xC673362C
 Drop
 
-:__if_end_70
+:__if_end_72
 
-:__if_end_69
+:__if_end_71
 Jump @__sw_3_end
 
 :__sw_3_4
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1699,7 +1680,7 @@ GetImmP1 0
 pGet
 pGet
 GetStaticP1 4
-GetImmP1 38
+GetImmP1 39
 GetFrame1 84
 Mult1 13
 GetImmP
@@ -1710,16 +1691,16 @@ Call @IS_BIT_SET
 SetFrame1 85
 Push_0
 GetFrame1 85
-JumpFalse @__cond_false_10
+JumpFalse @__cond_false_9
 
-:__cond_true_10
+:__cond_true_9
 PushString "[<green>ON</green>]"
-Jump @__cond_end_10
+Jump @__cond_end_9
 
-:__cond_false_10
+:__cond_false_9
 PushString "[<red>OFF</red>]"
 
-:__cond_end_10
+:__cond_end_9
 CallNative _UI_DRAW_RIGHT_TEXT 2 1 //0xC673362C
 Drop
 Jump @__sw_3_end
@@ -1757,28 +1738,28 @@ Push_1
 And
 Push_0
 CmpNe
-JumpFalse @__if_else_71
+JumpFalse @__if_else_73
 
-:__if_then_71
+:__if_then_73
 Call @ParseMenuControls
 Call @DrawMenu
-Call @DoNeededStuff
-Jump @__if_end_71
+Call @InitControls
+Jump @__if_end_73
 
-:__if_else_71
+:__if_else_73
 PushB3 0 1 0
 Push_0
 CallNative SET_PLAYER_CONTROL 4 0 //0xD17AFCD8
 PushString "HudGamerList"
 CallNative UI_ISFOCUSED 1 1 //0x6F2509E8
-JumpFalse @__if_else_72
+JumpFalse @__if_else_74
 
-:__if_then_72
+:__if_then_74
 PushString "HudGamerList"
 CallNative UI_UNFOCUS 1 0 //0xACEA059
-Jump @__if_end_72
+Jump @__if_end_74
 
-:__if_else_72
+:__if_else_74
 PushString "HudGamerList"
 CallNative UI_FOCUS 1 0 //0x699CC85E
 PushString "HudGamerList"
@@ -1786,56 +1767,56 @@ CallNative UI_RESTORE 1 0 //0x7ADB2BE7
 PushString "HudGamerList"
 CallNative UI_REFRESH 1 0 //0xFAC3DF71
 
-:__if_end_72
+:__if_end_74
 PushString "HudGamerList"
 CallNative UI_ISFOCUSED 1 1 //0x6F2509E8
 JumpFalse @__while_end_4
 
 :__while_body_4
 GetStaticP1 4
-GetImmP1 17
+GetImmP1 18
 pGet
 CallNative IS_SCRIPT_USE_CONTEXT_VALID 1 1 //0x115CD0CC
-JumpFalse @__if_end_73
+JumpFalse @__if_end_75
 
-:__if_then_73
+:__if_then_75
 GetStaticP1 4
-GetImmP1 17
+GetImmP1 18
 pGet
 CallNative RELEASE_SCRIPT_USE_CONTEXT 1 0 //0x4F52CB58
 
-:__if_end_73
+:__if_end_75
 CallNative NET_PLAYER_LIST_RESET 0 0 //0x67031EDA
 CallNative NET_GET_FREE_ROAM_MODE 0 1 //0x81F24788
 Push_1
 CmpEq
-JumpFalse @__if_else_74
+JumpFalse @__if_else_76
 
-:__if_then_74
+:__if_then_76
 PushString "Generic_Dbuffer64_0"
 PushString "%s"
 PushString "Hardcore Free Roam"
 Push_0
 Push_0
 CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
-Jump @__if_end_74
+Jump @__if_end_76
 
-:__if_else_74
+:__if_else_76
 CallNative NET_GET_FREE_ROAM_MODE 0 1 //0x81F24788
 Push_2
 CmpEq
-JumpFalse @__if_else_75
+JumpFalse @__if_else_77
 
-:__if_then_75
+:__if_then_77
 PushString "Generic_Dbuffer64_0"
 PushString "%s"
 PushString "Friendly Free Roam"
 Push_0
 Push_0
 CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
-Jump @__if_end_75
+Jump @__if_end_77
 
-:__if_else_75
+:__if_else_77
 PushString "Generic_Dbuffer64_0"
 PushString "%s"
 PushString "Free Roam"
@@ -1843,9 +1824,9 @@ Push_0
 Push_0
 CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
 
-:__if_end_75
+:__if_end_77
 
-:__if_end_74
+:__if_end_76
 PushString "Generic_Dbuffer64_0"
 CallNative NET_PLAYER_LIST_SET_TITLE 1 0 //0x547A660
 PushString "Generic_Dbuffer128_0"
@@ -1866,7 +1847,7 @@ JumpFalse @__while_body_4
 
 :__while_end_4
 
-:__if_end_71
+:__if_end_73
 Return 0 0
 //<
 
@@ -1905,7 +1886,7 @@ Return 0 1
 :GetMenuSlotId//>
 Function 0 2
 GetStatic1 2
-GetImmP1 18
+GetImmP1 19
 GetStatic1 2
 GetImmP1 16
 pGet
@@ -1941,13 +1922,13 @@ Function 3 5
 GetStatic1 3
 PushB 16
 CmpLt
-JumpFalse @__if_end_19
+JumpFalse @__if_end_22
 
-:__if_then_19
+:__if_then_22
 Call @ResetCurrentItem
 GetFrame1 0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -1955,7 +1936,7 @@ GetImmP1 3
 pSet
 GetFrame1 1
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -1963,7 +1944,7 @@ GetImmP1 1
 pSet
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -1972,7 +1953,7 @@ GetImmP1 0
 pSet
 GetFrame1 2
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -1990,7 +1971,7 @@ GetStatic1 2
 GetImmP1 15
 pSet
 
-:__if_end_19
+:__if_end_22
 Return 3 0
 //<
 
@@ -1999,13 +1980,13 @@ Function 5 7
 GetStatic1 3
 PushB 16
 CmpLt
-JumpFalse @__if_end_26
+JumpFalse @__if_end_29
 
-:__if_then_26
+:__if_then_29
 Call @ResetCurrentItem
 GetFrame1 0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2013,7 +1994,7 @@ GetImmP1 3
 pSet
 GetFrame1 3
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2021,7 +2002,7 @@ GetImmP1 1
 pSet
 GetFrame1 1
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2031,7 +2012,7 @@ GetImmP1 0
 pSet
 Push_4
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2042,7 +2023,7 @@ GetFrame1 2
 PushB 24
 CallNative shift_right 2 1
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2051,128 +2032,11 @@ GetImmP1 5
 pSet
 GetFrame1 4
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
 GetImmP1 2
-GetImmP1 0
-pSet
-GetStatic1 3
-Add1 1
-SetStatic1 3
-GetStatic1 2
-GetImmP1 15
-pGet
-Add1 1
-GetStatic1 2
-GetImmP1 15
-pSet
-
-:__if_end_26
-Return 5 0
-//<
-
-:AddItemMenu//>
-Function 3 5
-GetStatic1 3
-PushB 16
-CmpLt
-JumpFalse @__if_end_27
-
-:__if_then_27
-Call @ResetCurrentItem
-GetFrame1 0
-GetStatic1 2
-GetImmP1 38
-GetStatic1 3
-Mult1 13
-GetImmP
-GetImmP1 3
-pSet
-GetFrame1 1
-GetStatic1 2
-GetImmP1 38
-GetStatic1 3
-Mult1 13
-GetImmP
-GetImmP1 1
-pSet
-Push_5
-GetStatic1 2
-GetImmP1 38
-GetStatic1 3
-Mult1 13
-GetImmP
-GetImmP1 4
-GetImmP1 0
-pSet
-GetFrame1 2
-GetStatic1 2
-GetImmP1 38
-GetStatic1 3
-Mult1 13
-GetImmP
-GetImmP1 2
-GetImmP1 0
-pSet
-GetStatic1 3
-Add1 1
-SetStatic1 3
-GetStatic1 2
-GetImmP1 15
-pGet
-Add1 1
-GetStatic1 2
-GetImmP1 15
-pSet
-
-:__if_end_27
-Return 3 0
-//<
-
-:AddItemPlayer//>
-Function 2 4
-GetStatic1 3
-PushB 16
-CmpLt
-JumpFalse @__if_end_29
-
-:__if_then_29
-Call @ResetCurrentItem
-GetFrame1 0
-GetStatic1 2
-GetImmP1 38
-GetStatic1 3
-Mult1 13
-GetImmP
-GetImmP1 4
-GetImmP1 1
-pSet
-GetFrame1 0
-Call @GetSlotColor
-GetStatic1 2
-GetImmP1 38
-GetStatic1 3
-Mult1 13
-GetImmP
-GetImmP1 3
-pSet
-GetFrame1 1
-GetStatic1 2
-GetImmP1 38
-GetStatic1 3
-Mult1 13
-GetImmP
-GetImmP1 1
-pSet
-Push_7
-GetStatic1 2
-GetImmP1 38
-GetStatic1 3
-Mult1 13
-GetImmP
-GetImmP1 4
 GetImmP1 0
 pSet
 GetStatic1 3
@@ -2187,6 +2051,123 @@ GetImmP1 15
 pSet
 
 :__if_end_29
+Return 5 0
+//<
+
+:AddItemMenu//>
+Function 3 5
+GetStatic1 3
+PushB 16
+CmpLt
+JumpFalse @__if_end_30
+
+:__if_then_30
+Call @ResetCurrentItem
+GetFrame1 0
+GetStatic1 2
+GetImmP1 39
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 3
+pSet
+GetFrame1 1
+GetStatic1 2
+GetImmP1 39
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 1
+pSet
+Push_5
+GetStatic1 2
+GetImmP1 39
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 0
+pSet
+GetFrame1 2
+GetStatic1 2
+GetImmP1 39
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 2
+GetImmP1 0
+pSet
+GetStatic1 3
+Add1 1
+SetStatic1 3
+GetStatic1 2
+GetImmP1 15
+pGet
+Add1 1
+GetStatic1 2
+GetImmP1 15
+pSet
+
+:__if_end_30
+Return 3 0
+//<
+
+:AddItemPlayer//>
+Function 2 4
+GetStatic1 3
+PushB 16
+CmpLt
+JumpFalse @__if_end_32
+
+:__if_then_32
+Call @ResetCurrentItem
+GetFrame1 0
+GetStatic1 2
+GetImmP1 39
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 1
+pSet
+GetFrame1 0
+Call @GetSlotColor
+GetStatic1 2
+GetImmP1 39
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 3
+pSet
+GetFrame1 1
+GetStatic1 2
+GetImmP1 39
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 1
+pSet
+Push_7
+GetStatic1 2
+GetImmP1 39
+GetStatic1 3
+Mult1 13
+GetImmP
+GetImmP1 4
+GetImmP1 0
+pSet
+GetStatic1 3
+Add1 1
+SetStatic1 3
+GetStatic1 2
+GetImmP1 15
+pGet
+Add1 1
+GetStatic1 2
+GetImmP1 15
+pSet
+
+:__if_end_32
 Return 2 0
 //<
 
@@ -2194,15 +2175,15 @@ Return 2 0
 Function 0 2
 Push_0
 CallNative IS_LOCAL_PLAYER_VALID 1 1 //0xADC17E9
-JumpFalse @__if_end_78
+JumpFalse @__if_end_79
 
-:__if_then_78
+:__if_then_79
 Push_0
 CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
 CallNative _GET_ACTOR_CONTROLLER 1 1 //0x524F6981
 Return 0 1
 
-:__if_end_78
+:__if_end_79
 Push_0
 Return 0 1
 //<
@@ -2460,13 +2441,13 @@ Return 1 1
 Function 1 9
 CallNative NET_IS_IN_SESSION 0 1 //0x8CA54980
 Not
-JumpFalse @__if_end_79
+JumpFalse @__if_end_80
 
-:__if_then_79
+:__if_then_80
 PushString "Unknown"
 Return 1 1
 
-:__if_end_79
+:__if_end_80
 Push_6
 PushString "MPPlayerNameColored_"
 ToStack
@@ -2479,51 +2460,6 @@ StrAddI 23
 GetFrameP1 3
 CallNative UI_GET_STRING 1 1 //0xCCCFF80B
 Return 1 1
-//<
-
-:TeleportActor//>
-Function 4 7
-GetFrame1 0
-CallNative GET_HEADING 1 1 //0x42DE39F0
-SetFrame1 6
-GetFrame1 0
-CallNative IS_ACTOR_RIDING 1 1 //0xA6BBE769
-JumpFalse @__if_else_80
-
-:__if_then_80
-GetFrame1 0
-CallNative GET_MOUNT 1 1 //0xDD31EC4E
-GetFrameP1 1
-PushB3 1 1 1
-CallNative TELEPORT_ACTOR 5 0 //0x2D54B916
-Jump @__if_end_80
-
-:__if_else_80
-GetFrame1 0
-CallNative IS_ACTOR_DRIVING_VEHICLE 1 1 //0xDC99C124
-JumpFalse @__if_else_81
-
-:__if_then_81
-GetFrame1 0
-CallNative GET_VEHICLE 1 1 //0xA0936EB6
-GetFrameP1 1
-PushB3 1 1 1
-CallNative TELEPORT_ACTOR 5 0 //0x2D54B916
-Jump @__if_end_81
-
-:__if_else_81
-GetFrame1 0
-Push_3
-GetFrameP1 1
-ToStack
-GetFrame1 6
-PushB3 1 1 1
-CallNative TELEPORT_ACTOR_WITH_HEADING 8 0 //0xE4DE507C
-
-:__if_end_81
-
-:__if_end_80
-Return 4 0
 //<
 
 :sprintf//>
@@ -2566,14 +2502,92 @@ CallNative MESSAGE_VARIABLE_ANALOG_QUEUE 8 0 //0x32394BB6
 Return 4 0
 //<
 
+:LaunchNewScript//>
+Function 1 5
+GetFrame1 0
+CallNative DOES_SCRIPT_EXIST 1 1 //0xDEAB87AB
+Not
+JumpFalse @__if_end_98
+
+:__if_then_98
+Push_-1
+Return 1 1
+
+:__if_end_98
+GetFrame1 0
+Push_4
+CallNative REQUEST_ASSET 2 1 //0x9AA02DA7
+Drop
+GetFrame1 0
+Push_4
+CallNative GET_ASSET_ID 2 1 //0x6005B514
+SetFrame1 3
+GetFrame1 3
+CallNative STREAMING_IS_SCRIPT_LOADED 1 1 //0xB5B4AEAD
+Not
+JumpFalse @__while_end_5
+
+:__while_body_5
+GetFrame1 3
+CallNative STREAMING_REQUEST_SCRIPT 1 0 //0x11E57A92
+Push_0
+CallNative WAIT 1 0 //0x7715C03B
+
+:__while_cond_5
+GetFrame1 3
+CallNative STREAMING_IS_SCRIPT_LOADED 1 1 //0xB5B4AEAD
+Not
+Not
+JumpFalse @__while_body_5
+
+:__while_end_5
+GetFrame1 0
+Push_0
+CallNative LAUNCH_NEW_SCRIPT 2 1 //0x85A30503
+SetFrame1 4
+GetFrame1 4
+CallNative ADD_PERSISTENT_SCRIPT 1 0 //0x2F109475
+GetFrame1 4
+Return 1 1
+//<
+
+:SetCreditsFunction//>
+Function 1 4
+PushString "Credits to Im Foxxyyy & Sockstress"
+Push_0
+SetFrame1 3
+GetFrameP1 3
+PushB2 0 0
+Call @printf
+Return 1 0
+//<
+
+:SubMenu1//>
+Function 1 3
+PushString "SubMenu 1"
+Call @SetHeader
+PushString "Bool Test"
+GetStaticP1 252
+PushB2 0 24
+CallNative shift_left 2 1
+Push_0
+Push_0
+Call @AddItemBool
+PushString "> Credits"
+Push GetFuncLoc("SetCreditsFunction")
+Push_0
+Call @AddItem
+Return 1 0
+//<
+
 :NetworkOptions//>
 Function 1 4
 PushString "Network Options"
 Call @SetHeader
 CallNative NET_IS_IN_SESSION 0 1 //0x8CA54980
-JumpFalse @__if_else_14
+JumpFalse @__if_else_17
 
-:__if_then_14
+:__if_then_17
 Push_0
 SetFrame1 3
 GetFrame1 3
@@ -2585,12 +2599,12 @@ JumpFalse @__for_end_1
 GetFrame1 3
 CallNative IS_SLOT_VALID 1 1 //0xD04480FE
 Not
-JumpFalse @__if_end_15
+JumpFalse @__if_end_18
 
-:__if_then_15
+:__if_then_18
 Jump @__for_continue_1
 
-:__if_end_15
+:__if_end_18
 GetFrame1 3
 Push GetFuncLoc("OnlinePlayerSubMenu")
 Call @AddItemPlayer
@@ -2606,15 +2620,15 @@ Not
 JumpFalse @__for_body_1
 
 :__for_end_1
-Jump @__if_end_14
+Jump @__if_end_17
 
-:__if_else_14
+:__if_else_17
 PushString "Not in multiplayer session"
 Push_0
 Push_0
 Call @AddItem
 
-:__if_end_14
+:__if_end_17
 Return 1 0
 //<
 
@@ -2639,9 +2653,9 @@ PushString "Generic_Dbuffer64_0"
 CallNative UI_GET_STRING 1 1 //0xCCCFF80B
 PushString "Network Options"
 CallNative _STRING_COMPARE 2 1 //0x8218D693
-JumpFalse @__if_end_16
+JumpFalse @__if_end_19
 
-:__if_then_16
+:__if_then_19
 Push_0
 SetFrame1 2
 GetFrame1 2
@@ -2653,13 +2667,13 @@ JumpFalse @__for_end_2
 GetFrame1 2
 PushS 2048
 Call @CheckPlayerEvent
-JumpFalse @__if_end_17
+JumpFalse @__if_end_20
 
-:__if_then_17
+:__if_then_20
 Push_0
 Call @NetworkOptions
 
-:__if_end_17
+:__if_end_20
 
 :__for_continue_2
 GetFrame1 2
@@ -2673,12 +2687,17 @@ JumpFalse @__for_body_2
 
 :__for_end_2
 
-:__if_end_16
+:__if_end_19
 Return 0 0
 //<
 
 :main//>
-Function 0 2
+Function 0 4
+Push_0
+SetFrame1 2
+PushString "$/content/scripting/DesignerDefined/ui/fuieventmonitor_o"
+Call @LaunchNewScript
+SetFrame1 3
 CallNative GET_THIS_SCRIPT_ID 0 1 //0x9C424E0D
 CallNative ADD_PERSISTENT_SCRIPT 1 0 //0x2F109475
 Call @InitMenuDraw
@@ -2686,6 +2705,55 @@ Push_1
 JumpFalse @__while_end_0
 
 :__while_body_0
+CallNative HUD_IS_FADED 0 1 //0x4EFFFC06
+Not
+JumpFalse @__if_end_0
+
+:__pcf_1
+CallNative IS_GAME_PAUSED 0 1 //0x57246C02
+Not
+JumpFalse @__if_end_0
+
+:__if_then_0
+GetFrame1 2
+Not
+JumpFalse @__if_end_1
+
+:__if_then_1
+PushString "mex_mission_complete_song_01"
+PushB3 0 0 0
+PushB2 0 0
+CallNative AUDIO_MUSIC_ONE_SHOT 6 0 //0x714DA5BB
+PushString "Generic_Dbuffer128_2"
+PushString "Welcome <green>%s</green> !
+<purple>Hold</purple> <lb> <purple>and press</purple> <rs> <purple>to open</purple>"
+Push_0
+CallNative GET_LOCAL_PLAYER_NAME 1 1 //0xA183D927
+PushString ""
+PushString ""
+CallNative UI_SET_STRING_FORMAT 5 0 //0xEDA84121
+PushString "Generic_Dbuffer128_2"
+Push 1084227584
+PushF_0
+PushB2 2 0
+CallNative PRINT_BIG 5 0 //0x637016C9
+Push_1
+SetFrame1 2
+
+:__if_end_1
+GetFrame1 3
+CallNative IS_SCRIPT_VALID 1 1 //0x45F7D589
+Not
+JumpFalse @__if_end_2
+
+:__if_then_2
+PushString "$/content/scripting/DesignerDefined/ui/fuieventmonitor_o"
+Call @LaunchNewScript
+SetFrame1 3
+
+:__if_end_2
+
+:__if_end_0
 Call @HandleMenuUi
 Call @LoopedExecutionEntry
 Push_0
@@ -2703,14 +2771,14 @@ Return 0 0
 :OnlinePlayerSubMenu//>
 Function 1 3
 Call @WasLastmenuDirectionForward
-JumpFalse @__if_end_76
+JumpFalse @__if_end_78
 
-:__if_then_76
+:__if_then_78
 Call @GetMenuSlotId
-SetStatic1 250
+SetStatic1 251
 
-:__if_end_76
-GetStatic1 250
+:__if_end_78
+GetStatic1 251
 Call @GetSlotColor
 Call @SetHeader
 PushString "Teleport to Player"
@@ -2721,43 +2789,10 @@ Return 1 0
 //<
 
 :TeleportToPlayer//>
-Function 1 8
+Function 1 4
 GetFrame1 0
 pGet
 SetFrame1 3
-GetStatic1 250
-CallNative IS_SLOT_VALID 1 1 //0xD04480FE
-Not
-JumpFalse @__if_end_77
-
-:__if_then_77
-PushString "Failed !
-<red>Invalid player</red>"
-Push_0
-SetFrame1 7
-GetFrameP1 7
-PushB2 0 0
-Call @printf
-Return 1 0
-
-:__if_end_77
-GetStatic1 250
-GetFrameP1 4
-CallNative GET_SLOT_POSITION 2 1 //0x3241158C
-Drop
-Push_0
-CallNative GET_PLAYER_ACTOR 1 1 //0xE8CFDD53
-Push_3
-GetFrameP1 4
-ToStack
-Call @TeleportActor
-PushString "Teleported to %s"
-GetStatic1 250
-Call @GetSlotColor
-SetFrame1 7
-GetFrameP1 7
-PushB2 1 1
-Call @printf
 Return 1 0
 //<
 
@@ -2766,40 +2801,11 @@ Function 0 2
 Return 0 0
 //<
 
-:SetCreditsFunction//>
-Function 1 4
-PushString "Credits to Im Foxxyyy & Sockstress"
-Push_0
-SetFrame1 3
-GetFrameP1 3
-PushB2 0 0
-Call @printf
-Return 1 0
-//<
-
-:SubMenu1//>
-Function 1 3
-PushString "SubMenu 1"
-Call @SetHeader
-PushString "Bool Test"
-GetStaticP1 251
-PushB2 0 24
-CallNative shift_left 2 1
-Push_0
-Push_0
-Call @AddItemBool
-PushString "> Credits"
-Push GetFuncLoc("SetCreditsFunction")
-Push_0
-Call @AddItem
-Return 1 0
-//<
-
 :ResetCurrentItem//>
 Function 0 2
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2807,7 +2813,7 @@ GetImmP1 0
 pSet
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2815,7 +2821,7 @@ GetImmP1 1
 pSet
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2824,7 +2830,7 @@ GetImmP1 0
 pSet
 PushString ""
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2832,7 +2838,7 @@ GetImmP1 3
 pSet
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2841,7 +2847,7 @@ GetImmP1 0
 pSet
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2850,7 +2856,7 @@ GetImmP1 1
 pSet
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2860,7 +2866,7 @@ GetImmP1 0
 pSet
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2870,7 +2876,7 @@ GetImmP1 0
 pSet
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2880,7 +2886,7 @@ GetImmP1 0
 pSet
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2889,7 +2895,7 @@ GetImmP1 5
 pSet
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2898,7 +2904,7 @@ GetImmP1 6
 pSet
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2908,7 +2914,7 @@ GetImmP1 0
 pSet
 Push_0
 GetStatic1 2
-GetImmP1 38
+GetImmP1 39
 GetStatic1 3
 Mult1 13
 GetImmP
@@ -2954,21 +2960,21 @@ Or
 :__ExtSignWord--noSign--22
 PushB 37
 CmpEq
-JumpFalse @__if_else_89
+JumpFalse @__if_else_90
 
-:__if_then_89
+:__if_then_90
 GetFrame1 8
 Add1 1
 Dup
 SetFrame1 8
 GetFrame1 5
 CmpGe
-JumpFalse @__if_end_90
+JumpFalse @__if_end_91
 
-:__if_then_90
+:__if_then_91
 Jump @end_sprintf
 
-:__if_end_90
+:__if_end_91
 
 :PF_Parse_Flags
 GetFrame1 1
@@ -2998,12 +3004,12 @@ Dup
 SetFrame1 8
 GetFrame1 5
 CmpGe
-JumpFalse @__if_end_91
+JumpFalse @__if_end_92
 
-:__if_then_91
+:__if_then_92
 Jump @end_sprintf
 
-:__if_end_91
+:__if_end_92
 Jump @PF_Parse_Flags
 
 :__sw_5_1
@@ -3017,12 +3023,12 @@ Dup
 SetFrame1 8
 GetFrame1 5
 CmpGe
-JumpFalse @__if_end_92
+JumpFalse @__if_end_93
 
-:__if_then_92
+:__if_then_93
 Jump @end_sprintf
 
-:__if_end_92
+:__if_end_93
 Jump @PF_Parse_Flags
 
 :__sw_5_end
@@ -3057,20 +3063,20 @@ Push_1
 And
 Push_0
 CmpNe
-JumpFalse @__if_end_93
+JumpFalse @__if_end_94
 
-:__pcf_144
+:__pcf_146
 GetFrame1 9
 Push_0
 CmpGe
-JumpFalse @__if_end_93
+JumpFalse @__if_end_94
 
-:__if_then_93
+:__if_then_94
 PushString "+"
 GetFrame1 0
 StrAdd 255
 
-:__if_end_93
+:__if_end_94
 GetFrame1 9
 GetFrame1 0
 StrAddI 255
@@ -3082,14 +3088,14 @@ Push_2
 And
 Push_0
 CmpNe
-JumpFalse @__if_end_94
+JumpFalse @__if_end_95
 
-:__if_then_94
+:__if_then_95
 PushString "0"
 GetFrame1 0
 StrAdd 255
 
-:__if_end_94
+:__if_end_95
 GetFrame1 2
 Push_4
 Add
@@ -3110,14 +3116,14 @@ Push_2
 And
 Push_0
 CmpNe
-JumpFalse @__if_end_95
+JumpFalse @__if_end_96
 
-:__if_then_95
+:__if_then_96
 PushString "0x"
 GetFrame1 0
 StrAdd 255
 
-:__if_end_95
+:__if_end_96
 GetFrame1 2
 Push_4
 Add
@@ -3138,14 +3144,14 @@ Push_2
 And
 Push_0
 CmpNe
-JumpFalse @__if_end_96
+JumpFalse @__if_end_97
 
-:__if_then_96
+:__if_then_97
 PushString "0X"
 GetFrame1 0
 StrAdd 255
 
-:__if_end_96
+:__if_end_97
 GetFrame1 2
 Push_4
 Add
@@ -3248,9 +3254,9 @@ StrAdd 255
 Jump @__sw_6_end
 
 :__sw_6_end
-Jump @__if_end_89
+Jump @__if_end_90
 
-:__if_else_89
+:__if_else_90
 GetFrame1 1
 GetFrame1 8
 Add
@@ -3277,7 +3283,7 @@ GetFrameP1 6
 GetFrame1 0
 StrAdd 255
 
-:__if_end_89
+:__if_end_90
 
 :__for_continue_6
 GetFrame1 8

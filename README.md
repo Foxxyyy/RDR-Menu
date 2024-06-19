@@ -1,6 +1,9 @@
-# RDR Menu
-Menu base for RDR1
+# Red Dead Redemption menu base
 
-Made by Sockstress & me. Thanks to CabooseSayzWTF <3
+By Mars (Im Foxxyyy) & Sockstress.                     
+Thanks to CabooseSayzWTF.
 
-![Screenshot](screenshot.png)
+# Random pics of what you could do with it
+![Screenshot](example_menu_1.png)
+![Screenshot](example_menu_2.png)
+![Screenshot](example_menu_3.png)
